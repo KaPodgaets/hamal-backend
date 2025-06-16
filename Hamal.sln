@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hamal.Web", "src\Hamal.Web\Hamal.Web.csproj", "{CAEE77D3-DAA4-444D-BD2A-73BBBF992EB2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C24509E5-F4FD-4FBE-9C71-797641EFCABA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{3BE4801D-142E-46EE-8F0B-98D29B8F7189}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAEE77D3-DAA4-444D-BD2A-73BBBF992EB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAEE77D3-DAA4-444D-BD2A-73BBBF992EB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAEE77D3-DAA4-444D-BD2A-73BBBF992EB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAEE77D3-DAA4-444D-BD2A-73BBBF992EB2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CAEE77D3-DAA4-444D-BD2A-73BBBF992EB2} = {C24509E5-F4FD-4FBE-9C71-797641EFCABA}
+	EndGlobalSection
+EndGlobal
