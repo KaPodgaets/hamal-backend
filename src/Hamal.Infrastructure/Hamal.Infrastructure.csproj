@@ -7,7 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\Hamal.Application\Hamal.Application.csproj" />
+      <ProjectReference Include="..\Hamal.Domain\Hamal.Domain.csproj" />
     </ItemGroup>
 
 </Project>
