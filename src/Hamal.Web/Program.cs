@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Hamal.Application;
 
 namespace Hamal.Web;
 
@@ -24,6 +25,9 @@ public class Program
         var jwtSettings = new JwtSettings();
         builder.Configuration.Bind(JwtSettings.SectionName, jwtSettings);
         builder.Services.AddSingleton(Options.Create(jwtSettings));
+
+        // Application services
+        builder.Services.AddApplication();
 
         // Infrastructure Services
         builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
