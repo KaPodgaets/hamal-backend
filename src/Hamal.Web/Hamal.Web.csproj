@@ -14,4 +14,10 @@
       <Folder Include="Controllers\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Hamal.Application\Hamal.Application.csproj" />
+      <ProjectReference Include="..\Hamal.Domain\Hamal.Domain.csproj" />
+      <ProjectReference Include="..\Hamal.Infrastructure\Hamal.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
