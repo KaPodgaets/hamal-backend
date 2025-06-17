@@ -19,8 +19,4 @@
       <ProjectReference Include="..\Hamal.Domain\Hamal.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Migrations\" />
-    </ItemGroup>
-
 </Project>

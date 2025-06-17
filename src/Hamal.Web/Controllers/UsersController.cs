@@ -14,6 +14,13 @@ namespace Hamal.Web.Controllers;
 [Authorize(Roles = nameof(Role.Admin))]
 public class UsersController(AppDbContext dbContext, IPasswordHasher passwordHasher) : ControllerBase
 {
+    /// <summary>
+    /// Returns a list of users
+    /// </summary>
+    /// <response code="200">Returns the user list</response>
+    /// <response code="401">Unauthorized</response>
+    [ProducesResponseType(typeof(List<UserResponse>), 200)]
+    [ProducesResponseType(401)]
     [HttpGet]
     public async Task<IActionResult> GetUsers()
     {
@@ -23,6 +30,13 @@ public class UsersController(AppDbContext dbContext, IPasswordHasher passwordHas
         return Ok(users);
     }
 
+    /// <summary>
+    /// Returns a user
+    /// </summary>
+    /// <response code="200">Returns a user</response>
+    /// <response code="401">Unauthorized</response>
+    [ProducesResponseType(typeof(UserResponse), 200)]
+    [ProducesResponseType(401)]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetUserById(Guid id)
     {
@@ -33,7 +47,14 @@ public class UsersController(AppDbContext dbContext, IPasswordHasher passwordHas
         }
         return Ok(new UserResponse(user.Id, user.Username, user.Role));
     }
-
+    
+    /// <summary>
+    /// Create new user
+    /// </summary>
+    /// <response code="200">Returns a CreatedAtActionResult</response>
+    /// <response code="401">Unauthorized</response>
+    [ProducesResponseType(200)]
+    [ProducesResponseType(401)]
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
     {
@@ -57,6 +78,13 @@ public class UsersController(AppDbContext dbContext, IPasswordHasher passwordHas
         return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, response);
     }
 
+    /// <summary>
+    /// Update user
+    /// </summary>
+    /// <response code="200">Returns a CreatedAtActionResult</response>
+    /// <response code="401">Unauthorized</response>
+    [ProducesResponseType(typeof(NoContentResult), 200)]
+    [ProducesResponseType(401)]
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateUser(Guid id, [FromBody] CreateUserRequest request)
     {
@@ -79,6 +107,13 @@ public class UsersController(AppDbContext dbContext, IPasswordHasher passwordHas
         return NoContent();
     }
     
+    /// <summary>
+    /// Delete user
+    /// </summary>
+    /// <response code="200">No Content Result</response>
+    /// <response code="401">Unauthorized</response>
+    [ProducesResponseType(typeof(NoContentResult), 200)]
+    [ProducesResponseType(401)]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteUser(Guid id)
     {

@@ -16,6 +16,13 @@ public class AdminController(
     IFileParser fileParser,
     IFileExporter fileExporter) : ControllerBase
 {
+    /// <summary>
+    /// Delete all citizens' records from table citizens
+    /// </summary>
+    /// <response code="200">Returns a NoContentResult</response>
+    /// <response code="401">Unauthorized</response>
+    [ProducesResponseType(typeof(NoContentResult), 200)]
+    [ProducesResponseType(401)]
     [HttpDelete("")]
     public async Task<IActionResult> ClearCitizens()
     {
@@ -23,7 +30,14 @@ public class AdminController(
         await dbContext.Citizens.ExecuteDeleteAsync();
         return NoContent();
     }
-
+    
+    /// <summary>
+    /// Return csv file of all citizens' records from table citizens
+    /// </summary>
+    /// <response code="200">Returns a NonActionResult</response>
+    /// <response code="401">Unauthorized</response>
+    [ProducesResponseType(typeof(File), 200)]
+    [ProducesResponseType(401)]
     [HttpGet("")]
     public async Task<IActionResult> ExportCitizens()
     {
@@ -32,7 +46,18 @@ public class AdminController(
         
         return File(fileBytes, "text/csv", $"citizens-export-{DateTime.UtcNow:yyyy-MM-dd-HH-mm-ss}.csv");
     }
-
+    
+    /// <summary>
+    /// Upload new users
+    /// </summary>
+    /// <response code="200">Returns a message about successfully loaded records</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="409">Conflict</response>
+    /// <response code="500">BadRequest</response>
+    [ProducesResponseType(200)]
+    [ProducesResponseType(401)]
+    [ProducesResponseType(409)]
+    [ProducesResponseType(500)]
     [HttpPost("")]
     public async Task<IActionResult> UploadCitizens(IFormFile? file)
     {

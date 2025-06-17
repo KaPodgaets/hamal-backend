@@ -54,7 +54,10 @@ public class Program
         builder.Services.AddControllers();
         
         // Swagger / OpenAPI
+        builder.Services.AddOpenApi();
+        
         builder.Services.AddEndpointsApiExplorer();
+        
         builder.Services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hamal API", Version = "v1" });
@@ -86,7 +89,10 @@ public class Program
         // --- HTTP Request Pipeline Configuration ---
         if (app.Environment.IsDevelopment())
         {
+            app.MapOpenApi();
+            
             app.UseSwagger();
+            // app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "NavigatorProject"));
             app.UseSwaggerUI();
 
             // Seed database with admin user for development

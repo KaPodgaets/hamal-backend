@@ -17,6 +17,15 @@ namespace Hamal.Web.Controllers;
 [Authorize]
 public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizenCommand> validator) : ControllerBase
 {
+    /// <summary>
+    /// Create new user
+    /// </summary>
+    /// <response code="200">Returns a CreatedAtActionResult</response>
+    /// <response code="204">Returns a Not Found</response>
+    /// <response code="401">Unauthorized</response>
+    [ProducesResponseType(typeof(CitizenResponse), 200)]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(401)]
     [HttpGet("next")]
     public async Task<IActionResult> GetNextCitizen()
     {
@@ -56,6 +65,17 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         }
     }
     
+    /// <summary>
+    /// Update citizen's form
+    /// </summary>
+    /// <response code="200">Ok</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="404">NotFound</response>
+    /// <response code="500">BadRequest</response>
+    [ProducesResponseType(200)]
+    [ProducesResponseType(401)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateCitizen(int id, [FromBody] UpdateCitizenRequest request)
     {

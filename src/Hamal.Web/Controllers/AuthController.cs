@@ -5,7 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hamal.Web.Controllers;
-
+/// <summary>
+/// 
+/// </summary>
+/// <param name="dbContext"></param>
+/// <param name="passwordHasher"></param>
+/// <param name="jwtTokenGenerator"></param>
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController(
@@ -13,6 +18,14 @@ public class AuthController(
     IPasswordHasher passwordHasher,
     IJwtTokenGenerator jwtTokenGenerator) : ControllerBase
 {
+    /// <summary>
+    /// Returns a JWT token with encrypted user's role
+    /// </summary>
+    /// <param name="request"></param>
+    /// <response code="200">Returns the user list</response>
+    /// <response code="401">Unauthorized</response>
+    [ProducesResponseType(typeof(LoginResponse), 200)]
+    [ProducesResponseType(401)]
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
@@ -23,6 +36,6 @@ public class AuthController(
             return Unauthorized("Invalid credentials.");
         }
 
-        return Ok(new LoginResponse(jwtTokenGenerator.GenerateToken(user)));
+        return Ok(new LoginResponse(jwtTokenGenerator.GenerateToken(user), (int)user.Role));
     }
 } 
