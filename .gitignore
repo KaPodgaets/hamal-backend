@@ -404,3 +404,10 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# EF Migrations folders
+**/Migrations/
+
+
+
+/.idea/.idea.Hamal/.idea/dataSources.xml
