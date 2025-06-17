@@ -1,4 +1,3 @@
-using System.Globalization;
 using Hamal.Application.Common.Interfaces;
 using Hamal.Domain.Entities;
 using Hamal.Domain.Enums;
@@ -18,7 +17,7 @@ public class CsvParser : IFileParser
         if (header is null) throw new CsvParsingException("CSV file is empty or has no header.");
         
         // A simple positional parser is used, assuming a minimal format for new data uploads:
-        // StreetName,BuildingNumber,FlatNumber,FirstName,LastName,FamilyNumber,IsLonely
+        // StreetName, BuildingNumber, FlatNumber, FirstName, LastName, FamilyNumber, IsLonely
 
         int lineNumber = 1;
         while (!reader.EndOfStream)
@@ -28,7 +27,7 @@ public class CsvParser : IFileParser
             if (string.IsNullOrWhiteSpace(line)) continue;
 
             var values = line.Split(',');
-            if (values.Length < 7) throw new CsvParsingException($"Line {lineNumber} has too few columns. Expected 7.");
+            if (values.Length < 15) throw new CsvParsingException($"Line {lineNumber} has too few columns. Expected 15.");
 
             try
             {
@@ -42,6 +41,7 @@ public class CsvParser : IFileParser
                     FlatNumber = values[5].Trim(),
                     
                     FamilyNumber = int.Parse(values[6]),
+                    
                     IsAnsweredTheCall = bool.Parse(values[7]),
                     
                     IsLonely = bool.Parse(values[8]),
@@ -53,7 +53,7 @@ public class CsvParser : IFileParser
                     
                     StatusInCallCenter = CitizenStatus.Pending,
                     LastUpdatedAt = null,
-                    CreatedAt = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
                     
                 };
                 citizens.Add(citizen);

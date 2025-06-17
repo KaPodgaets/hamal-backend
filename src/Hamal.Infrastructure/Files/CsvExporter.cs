@@ -12,17 +12,19 @@ public class CsvExporter : IFileExporter
         var sb = new StringBuilder();
 
         // Header
-        sb.AppendLine("Id,StreetName,BuildingNumber,FlatNumber,FirstName,LastName,FamilyNumber,IsLonely,IsAddressWrong,NewStreetName,NewBuildingNumber,NewFlatNumber,Status,AssignedToUserId,LockedUntil,LastUpdatedAt");
+        sb.AppendLine(@"Id,FID,StreetName,BuildingNumber,FlatNumber,FirstName,LastName,FamilyNumber,IsAnsweredTheCall,IsLonely,IsAddressWrong,NewStreetName,NewBuildingNumber,NewFlatNumber,Status,LockedByUserId,LockedUntil,LastUpdatedByUserId,LastUpdatedAt,CreatedAt");
 
         foreach (var citizen in citizens)
         {
             sb.Append(citizen.Id).Append(',');
+            sb.Append(citizen.Fid).Append(',');
             sb.Append(Escape(citizen.StreetName)).Append(',');
             sb.Append(Escape(citizen.BuildingNumber)).Append(',');
             sb.Append(Escape(citizen.FlatNumber)).Append(',');
             sb.Append(Escape(citizen.FirstName)).Append(',');
             sb.Append(Escape(citizen.LastName)).Append(',');
             sb.Append(citizen.FamilyNumber).Append(',');
+            sb.Append(citizen.IsAnsweredTheCall).Append(',');
             sb.Append(citizen.IsLonely).Append(',');
             sb.Append(citizen.IsAddressWrong).Append(',');
             sb.Append(Escape(citizen.NewStreetName)).Append(',');
@@ -31,7 +33,10 @@ public class CsvExporter : IFileExporter
             sb.Append(citizen.StatusInCallCenter).Append(',');
             sb.Append(citizen.LockedByUserId).Append(',');
             sb.Append(FormatDateTime(citizen.LockedUntil)).Append(',');
-            sb.AppendLine(FormatDateTime(citizen.LastUpdatedAt));
+            sb.Append(citizen.LastUpdatedByUserId).Append(',');
+            sb.Append(FormatDateTime(citizen.LastUpdatedAt)).Append(',');
+            sb.AppendLine(FormatDateTime(citizen.CreatedAt));
+            
         }
 
         return Encoding.UTF8.GetBytes(sb.ToString());
