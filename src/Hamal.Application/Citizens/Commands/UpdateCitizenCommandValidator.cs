@@ -5,10 +5,16 @@ namespace Hamal.Application.Citizens.Commands;
 
 public class UpdateCitizenCommandValidator : AbstractValidator<UpdateCitizenCommand>
 {
-    // Regex to match Hebrew characters
-    private const string HebrewLettersOnly = @"^[\p{IsHebrew}]+$";
-    private const string HebrewLettersDigitsAndDash = @"^[\p{IsHebrew}0-9-]{3,}$";
-    private const string DigitsAndOneHebrewLetter = @"^[0-9]*[\p{IsHebrew}]?[0-9]*$";
+    // Hebrew letters only, allowing spaces between words
+    private const string HebrewLettersOnly = @"^[\p{IsHebrew} ]+$";
+
+    // Hebrew letters, digits, dash, and spaces — minimum 3 characters
+    private const string HebrewLettersDigitsAndDash = @"^[\p{IsHebrew}0-9\- ]{3,}$";
+
+    // Digits with optional one Hebrew letter, allow optional spaces
+    private const string DigitsAndOneHebrewLetter = @"^[0-9\s]*[\p{IsHebrew}]?[0-9\s]*$";
+    
+    private const string DigitsOnly = @"^\d+$";
 
     public UpdateCitizenCommandValidator()
     {
@@ -23,8 +29,8 @@ public class UpdateCitizenCommandValidator : AbstractValidator<UpdateCitizenComm
                 .WithMessage("New street name must be at least 3 characters and contain only Hebrew letters, digits, or dashes.");
             RuleFor(x => x.NewBuildingNumber).NotEmpty().Matches(DigitsAndOneHebrewLetter)
                  .WithMessage("New building number must contain only digits and at most one Hebrew letter.");
-            RuleFor(x => x.NewFlatNumber).NotNull().InclusiveBetween(0, 499)
-                 .WithMessage("New flat number must be between 0 and 499.");
+            RuleFor(x => x.NewFlatNumber).NotEmpty().Matches(DigitsOnly)
+                 .WithMessage("New flat number must contain only digits.");
         });
     }
 } 

@@ -1,6 +1,9 @@
 namespace Hamal.Web.Contracts.Citizens;
 
 public record UpdateCitizenRequest(
+    string StreetName,
+    string BuildingNumber,
+    string FlatNumber,
     string FirstName,
     string LastName,
     int FamilyNumber,
@@ -8,4 +11,8 @@ public record UpdateCitizenRequest(
     bool IsAddressWrong,
     string? NewStreetName,
     string? NewBuildingNumber,
-    int? NewFlatNumber); 
+    string? NewFlatNumber,
+    string? Phone1,
+    string? Phone2,
+    string? Phone3,
+    bool IsAnsweredTheCall); 

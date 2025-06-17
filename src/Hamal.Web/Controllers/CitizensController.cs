@@ -35,9 +35,15 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
 
         try
         {
-            var pendingStatus = CitizenStatus.Pending.ToString();
+            var pendingStatus = nameof(CitizenStatus.Pending);
             var citizen = await dbContext.Citizens
-                .FromSql($"SELECT * FROM \"Citizens\" WHERE \"Status\" = {pendingStatus} ORDER BY \"Id\" FOR UPDATE SKIP LOCKED LIMIT 1")
+                .FromSqlRaw("""
+                                SELECT * FROM "Citizens"
+                                WHERE "StatusInCallCenter" = {0}
+                                ORDER BY "Id"
+                                FOR UPDATE SKIP LOCKED
+                                LIMIT 1
+                            """, pendingStatus)
                 .AsTracking()
                 .FirstOrDefaultAsync();
 
@@ -81,6 +87,9 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
     {
         var command = new UpdateCitizenCommand(
             id,
+            request.StreetName,
+            request.BuildingNumber,
+            request.FlatNumber,
             request.FirstName,
             request.LastName,
             request.FamilyNumber,
@@ -88,7 +97,11 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             request.IsAddressWrong,
             request.NewStreetName,
             request.NewBuildingNumber,
-            request.NewFlatNumber
+            request.NewFlatNumber,
+            request.Phone1,
+            request.Phone2,
+            request.Phone3,
+            request.IsAnsweredTheCall
         );
 
         var validationResult = await validator.ValidateAsync(command);
@@ -136,8 +149,12 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         citizenRecord.FamilyNumber,
         citizenRecord.IsLonely,
         citizenRecord.IsAddressWrong,
-        citizenRecord.StatusInCallCenter,
-        citizenRecord.LockedUntil,
-        citizenRecord.LastUpdatedAt
+        citizenRecord.NewStreetName,
+        citizenRecord.NewBuildingNumber,
+        citizenRecord.NewFlatNumber,
+        citizenRecord.Phone1,
+        citizenRecord.Phone2,
+        citizenRecord.Phone3,
+        citizenRecord.IsAnsweredTheCall
     );
 } 

@@ -2,6 +2,9 @@ namespace Hamal.Application.Citizens.Commands;
 
 public record UpdateCitizenCommand(
     int Id,
+    string StreetName,
+    string BuildingNumber,
+    string FlatNumber,
     string FirstName,
     string LastName,
     int FamilyNumber,
@@ -9,5 +12,9 @@ public record UpdateCitizenCommand(
     bool IsAddressWrong,
     string? NewStreetName,
     string? NewBuildingNumber,
-    int? NewFlatNumber
+    string? NewFlatNumber,
+    string? Phone1,
+    string? Phone2,
+    string? Phone3,
+    bool IsAnsweredTheCall
 ); 

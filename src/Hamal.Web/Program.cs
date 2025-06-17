@@ -21,7 +21,18 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // --- Services Configuration ---
-
+        
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy", policy =>
+            {
+                policy
+                    .WithOrigins("http://localhost")  // ✅ safe here because nginx proxies requests from same origin
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
+        
         // JWT Settings
         var jwtSettings = new JwtSettings();
         builder.Configuration.Bind(JwtSettings.SectionName, jwtSettings);
@@ -85,6 +96,8 @@ public class Program
 
         // --- Application Build ---
         var app = builder.Build();
+        
+        app.UseCors("CorsPolicy");
 
         // --- HTTP Request Pipeline Configuration ---
         if (app.Environment.IsDevelopment())

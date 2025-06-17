@@ -1,0 +1,4 @@
+﻿Fid,FirstName,LastName,StreetName,BuildingNumber,FlatNumber,FamilyNumber,IsAnsweredTheCall,IsLonely,IsAddressWrong,10,11,12,Phone1,Phone2,Phone3
+1,שם אחד,משפחה אחד,רחוב אחב,1,1,1,FALSE,FALSE,FALSE,,,,053-5445336,053-5445336,053-5445336
+2,שם שני,משפחה שני,רחוב גגג,2,2,2,FALSE,FALSE,FALSE,,,,053-5445336,053-5445336,053-5445336
+3,שם שלישי,שפחה שלילי,רחוב דדד,3,3,3,FALSE,FALSE,FALSE,,,,053-5445336,053-5445336,053-5445336

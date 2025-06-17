@@ -12,7 +12,11 @@ public record CitizenResponse(
     int FamilyNumber,
     bool IsLonely,
     bool IsAddressWrong,
-    CitizenStatus Status,
-    DateTime? LockedUntil,
-    DateTime? LastUpdatedAt
+    string? NewStreetName,
+    string? NewBuildingNumber,
+    string? NewFlatNumber,
+    string? Phone1,
+    string? Phone2,
+    string? Phone3,
+    bool IsAnsweredTheCall
 ); 
