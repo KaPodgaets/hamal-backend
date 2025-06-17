@@ -2,14 +2,15 @@ using System.Text;
 using Hamal.Application.Common.Interfaces;
 using Hamal.Domain.Entities;
 using Hamal.Domain.Enums;
+using Hamal.Infrastructure;
 using Hamal.Infrastructure.Auth;
 using Hamal.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Hamal.Application;
+using Microsoft.OpenApi.Models;
 
 namespace Hamal.Web;
 
@@ -30,9 +31,8 @@ public class Program
         builder.Services.AddApplication();
 
         // Infrastructure Services
-        builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-        builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
-
+        builder.Services.AddInfrastructure();
+        
         // Database
         builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))

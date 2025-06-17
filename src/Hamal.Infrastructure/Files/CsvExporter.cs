@@ -1,0 +1,51 @@
+using System.Globalization;
+using System.Text;
+using Hamal.Application.Common.Interfaces;
+using Hamal.Domain.Entities;
+
+namespace Hamal.Infrastructure.Files;
+
+public class CsvExporter : IFileExporter
+{
+    public byte[] ExportToCsv(IEnumerable<Citizen> citizens)
+    {
+        var sb = new StringBuilder();
+
+        // Header
+        sb.AppendLine("Id,StreetName,BuildingNumber,FlatNumber,FirstName,LastName,FamilyNumber,IsLonely,IsAddressWrong,NewStreetName,NewBuildingNumber,NewFlatNumber,Status,AssignedToUserId,LockedUntil,LastUpdatedAt");
+
+        foreach (var citizen in citizens)
+        {
+            sb.Append(citizen.Id).Append(',');
+            sb.Append(Escape(citizen.StreetName)).Append(',');
+            sb.Append(Escape(citizen.BuildingNumber)).Append(',');
+            sb.Append(Escape(citizen.FlatNumber)).Append(',');
+            sb.Append(Escape(citizen.FirstName)).Append(',');
+            sb.Append(Escape(citizen.LastName)).Append(',');
+            sb.Append(citizen.FamilyNumber).Append(',');
+            sb.Append(citizen.IsLonely).Append(',');
+            sb.Append(citizen.IsAddressWrong).Append(',');
+            sb.Append(Escape(citizen.NewStreetName)).Append(',');
+            sb.Append(Escape(citizen.NewBuildingNumber)).Append(',');
+            sb.Append(Escape(citizen.NewFlatNumber)).Append(',');
+            sb.Append(citizen.Status).Append(',');
+            sb.Append(citizen.AssignedToUserId).Append(',');
+            sb.Append(FormatDateTime(citizen.LockedUntil)).Append(',');
+            sb.AppendLine(FormatDateTime(citizen.LastUpdatedAt));
+        }
+
+        return Encoding.UTF8.GetBytes(sb.ToString());
+    }
+
+    private static string Escape(string? value)
+    {
+        if (string.IsNullOrEmpty(value)) return "";
+        if (value.Contains(',') || value.Contains('"') || value.Contains('\n'))
+        {
+            return $"\"{value.Replace("\"", "\"\"")}\"";
+        }
+        return value;
+    }
+    
+    private static string FormatDateTime(DateTime? dt) => dt?.ToString("o", CultureInfo.InvariantCulture) ?? "";
+} 
