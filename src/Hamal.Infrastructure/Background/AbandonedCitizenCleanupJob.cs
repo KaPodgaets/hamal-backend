@@ -39,10 +39,10 @@ public class AbandonedCitizenCleanupJob(
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
             var updatedCount = await dbContext.Citizens
-                .Where(c => c.Status == CitizenStatus.InProgress && c.LockedUntil < DateTime.UtcNow)
+                .Where(c => c.StatusInCallCenter == CitizenStatus.InProgress && c.LockedUntil < DateTime.UtcNow)
                 .ExecuteUpdateAsync(updates => updates
-                    .SetProperty(c => c.Status, CitizenStatus.Pending)
-                    .SetProperty(c => c.AssignedToUserId, (Guid?)null)
+                    .SetProperty(c => c.StatusInCallCenter, CitizenStatus.Pending)
+                    .SetProperty(c => c.LockedByUserId, (Guid?)null)
                     .SetProperty(c => c.LockedUntil, (DateTime?)null),
                     cancellationToken: stoppingToken);
             

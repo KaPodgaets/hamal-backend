@@ -2,9 +2,10 @@ using Hamal.Domain.Enums;
 
 namespace Hamal.Domain.Entities;
 
-public class Citizen
+public class CitizenRecord
 {
     public int Id { get; set; }
+    public int Fid { get; set; }
     public string StreetName { get; set; } = string.Empty;
     public string BuildingNumber { get; set; } = string.Empty;
     public string FlatNumber { get; set; } = string.Empty;
@@ -16,8 +17,14 @@ public class Citizen
     public string? NewStreetName { get; set; }
     public string? NewBuildingNumber { get; set; }
     public string? NewFlatNumber { get; set; }
-    public CitizenStatus Status { get; set; }
-    public Guid? AssignedToUserId { get; set; }
+    public CitizenStatus StatusInCallCenter { get; set; }
+    public string? Phone1 { get; set; } = string.Empty;
+    public string? Phone2 { get; set; } = string.Empty;
+    public string? Phone3 { get; set; } = string.Empty;
+    public bool IsAnsweredTheCall { get; set; }
+    public Guid? LockedByUserId { get; set; }
     public DateTime? LockedUntil { get; set; }
-    public DateTime LastUpdatedAt { get; set; }
-} 
+    public DateTime? LastUpdatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public Guid? LastUpdatedByUserId { get; set; }
+}

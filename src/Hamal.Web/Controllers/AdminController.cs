@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore;
 namespace Hamal.Web.Controllers;
 
 [ApiController]
-[Route("api/admin")]
+[Route("api/admin/citizens")]
 [Authorize(Roles = nameof(Role.Admin))]
 public class AdminController(
     AppDbContext dbContext,
     IFileParser fileParser,
     IFileExporter fileExporter) : ControllerBase
 {
-    [HttpDelete("citizens")]
+    [HttpDelete("")]
     public async Task<IActionResult> ClearCitizens()
     {
         // This is a highly destructive operation. In a real app, this might be a soft delete or require extra confirmation.
@@ -24,7 +24,7 @@ public class AdminController(
         return NoContent();
     }
 
-    [HttpGet("citizens/export")]
+    [HttpGet("")]
     public async Task<IActionResult> ExportCitizens()
     {
         var citizens = await dbContext.Citizens.AsNoTracking().ToListAsync();
@@ -33,8 +33,8 @@ public class AdminController(
         return File(fileBytes, "text/csv", $"citizens-export-{DateTime.UtcNow:yyyy-MM-dd-HH-mm-ss}.csv");
     }
 
-    [HttpPost("citizens/upload")]
-    public async Task<IActionResult> UploadCitizens(IFormFile file)
+    [HttpPost("")]
+    public async Task<IActionResult> UploadCitizens(IFormFile? file)
     {
         if (file is null || file.Length == 0)
         {

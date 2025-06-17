@@ -14,5 +14,5 @@ public record CitizenResponse(
     bool IsAddressWrong,
     CitizenStatus Status,
     DateTime? LockedUntil,
-    DateTime LastUpdatedAt
+    DateTime? LastUpdatedAt
 ); 

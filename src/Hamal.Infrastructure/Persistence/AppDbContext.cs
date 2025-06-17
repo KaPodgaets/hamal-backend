@@ -7,7 +7,7 @@ namespace Hamal.Infrastructure.Persistence;
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<User> Users { get; set; }
-    public DbSet<Citizen> Citizens { get; set; }
+    public DbSet<CitizenRecord> Citizens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -18,16 +18,11 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 .HasConversion<string>();
         });
 
-        modelBuilder.Entity<Citizen>(b =>
+        modelBuilder.Entity<CitizenRecord>(b =>
         {
             b.HasKey(c => c.Id);
-            b.Property(c => c.Status)
+            b.Property(c => c.StatusInCallCenter)
                 .HasConversion<string>();
-            
-            // Example of seeding data for testing. 
-            // In a real scenario, this would come from a data import.
-            b.HasData(new Citizen { Id = 1, StreetName = "הרצל", BuildingNumber = "10", FlatNumber = "5", FirstName="ישראל", LastName="ישראלי", FamilyNumber=4, Status=CitizenStatus.Pending, LastUpdatedAt=DateTime.UtcNow});
-            b.HasData(new Citizen { Id = 2, StreetName = "ז'בוטינסקי", BuildingNumber = "22", FlatNumber = "1", FirstName="משה", LastName="כהן", FamilyNumber=2, Status=CitizenStatus.Pending, IsLonely=true, LastUpdatedAt=DateTime.UtcNow });
         });
 
         base.OnModelCreating(modelBuilder);

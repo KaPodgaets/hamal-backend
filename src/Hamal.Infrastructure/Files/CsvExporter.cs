@@ -7,7 +7,7 @@ namespace Hamal.Infrastructure.Files;
 
 public class CsvExporter : IFileExporter
 {
-    public byte[] ExportToCsv(IEnumerable<Citizen> citizens)
+    public byte[] ExportToCsv(IEnumerable<CitizenRecord> citizens)
     {
         var sb = new StringBuilder();
 
@@ -28,8 +28,8 @@ public class CsvExporter : IFileExporter
             sb.Append(Escape(citizen.NewStreetName)).Append(',');
             sb.Append(Escape(citizen.NewBuildingNumber)).Append(',');
             sb.Append(Escape(citizen.NewFlatNumber)).Append(',');
-            sb.Append(citizen.Status).Append(',');
-            sb.Append(citizen.AssignedToUserId).Append(',');
+            sb.Append(citizen.StatusInCallCenter).Append(',');
+            sb.Append(citizen.LockedByUserId).Append(',');
             sb.Append(FormatDateTime(citizen.LockedUntil)).Append(',');
             sb.AppendLine(FormatDateTime(citizen.LastUpdatedAt));
         }

@@ -38,8 +38,8 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
                 return NoContent();
             }
 
-            citizen.Status = CitizenStatus.InProgress;
-            citizen.AssignedToUserId = userId;
+            citizen.StatusInCallCenter = CitizenStatus.InProgress;
+            citizen.LockedByUserId = userId;
             citizen.LockedUntil = DateTime.UtcNow.AddMinutes(30);
             citizen.LastUpdatedAt = DateTime.UtcNow;
 
@@ -81,8 +81,8 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         var citizen = await dbContext.Citizens.FindAsync(id);
 
         if (citizen is null) return NotFound();
-        if (citizen.AssignedToUserId != userId) return Forbid("This record is not assigned to you.");
-        if (citizen.Status != CitizenStatus.InProgress) return BadRequest("This record can no longer be updated.");
+        if (citizen.LockedByUserId != userId) return Forbid("This record is not assigned to you.");
+        if (citizen.StatusInCallCenter != CitizenStatus.InProgress) return BadRequest("This record can no longer be updated.");
         if (citizen.LockedUntil < DateTime.UtcNow) return BadRequest("The lock on this record has expired.");
 
         // Map validated command to entity
@@ -98,7 +98,7 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             citizen.NewFlatNumber = command.NewFlatNumber.ToString();
         }
         
-        citizen.Status = CitizenStatus.Updated;
+        citizen.StatusInCallCenter = CitizenStatus.Updated;
         citizen.LastUpdatedAt = DateTime.UtcNow;
 
         await dbContext.SaveChangesAsync();
@@ -106,18 +106,18 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         return NoContent();
     }
     
-    private static CitizenResponse MapToResponse(Citizen citizen) => new(
-        citizen.Id,
-        citizen.StreetName,
-        citizen.BuildingNumber,
-        citizen.FlatNumber,
-        citizen.FirstName,
-        citizen.LastName,
-        citizen.FamilyNumber,
-        citizen.IsLonely,
-        citizen.IsAddressWrong,
-        citizen.Status,
-        citizen.LockedUntil,
-        citizen.LastUpdatedAt
+    private static CitizenResponse MapToResponse(CitizenRecord citizenRecord) => new(
+        citizenRecord.Id,
+        citizenRecord.StreetName,
+        citizenRecord.BuildingNumber,
+        citizenRecord.FlatNumber,
+        citizenRecord.FirstName,
+        citizenRecord.LastName,
+        citizenRecord.FamilyNumber,
+        citizenRecord.IsLonely,
+        citizenRecord.IsAddressWrong,
+        citizenRecord.StatusInCallCenter,
+        citizenRecord.LockedUntil,
+        citizenRecord.LastUpdatedAt
     );
 } 

@@ -4,5 +4,5 @@ namespace Hamal.Application.Common.Interfaces;
 
 public interface IFileExporter
 {
-    byte[] ExportToCsv(IEnumerable<Citizen> citizens);
+    byte[] ExportToCsv(IEnumerable<CitizenRecord> citizens);
 } 

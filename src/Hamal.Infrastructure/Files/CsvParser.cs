@@ -9,9 +9,9 @@ public class CsvParsingException(string message) : Exception(message);
 
 public class CsvParser : IFileParser
 {
-    public IEnumerable<Citizen> ParseCitizens(Stream stream)
+    public IEnumerable<CitizenRecord> ParseCitizens(Stream stream)
     {
-        var citizens = new List<Citizen>();
+        var citizens = new List<CitizenRecord>();
         using var reader = new StreamReader(stream);
 
         var header = reader.ReadLine();
@@ -32,17 +32,29 @@ public class CsvParser : IFileParser
 
             try
             {
-                var citizen = new Citizen
+                var citizen = new CitizenRecord
                 {
-                    StreetName = values[0].Trim(),
-                    BuildingNumber = values[1].Trim(),
-                    FlatNumber = values[2].Trim(),
-                    FirstName = values[3].Trim(),
-                    LastName = values[4].Trim(),
-                    FamilyNumber = int.Parse(values[5], CultureInfo.InvariantCulture),
-                    IsLonely = bool.Parse(values[6]),
-                    Status = CitizenStatus.Pending,
-                    LastUpdatedAt = DateTime.UtcNow
+                    Fid = int.Parse(values[0]),
+                    FirstName = values[2].Trim(),
+                    LastName = values[1].Trim(),
+                    StreetName = values[3].Trim(),
+                    BuildingNumber = values[4].Trim(),
+                    FlatNumber = values[5].Trim(),
+                    
+                    FamilyNumber = int.Parse(values[6]),
+                    IsAnsweredTheCall = bool.Parse(values[7]),
+                    
+                    IsLonely = bool.Parse(values[8]),
+                    IsAddressWrong = bool.Parse(values[9]),
+                    
+                    Phone1 = values[13].Trim(),
+                    Phone2 = values[14].Trim(),
+                    Phone3 = values[15].Trim(),
+                    
+                    StatusInCallCenter = CitizenStatus.Pending,
+                    LastUpdatedAt = null,
+                    CreatedAt = DateTime.Now,
+                    
                 };
                 citizens.Add(citizen);
             }
