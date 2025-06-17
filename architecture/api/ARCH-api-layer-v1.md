@@ -7,7 +7,7 @@ owner: "@dev-team"
 version: v1
 status: current
 created: 2025-06-16
-updated: 2025-06-16
+updated: 2025-06-17
 tags: [api, presentation, aspnetcore]
 depends_on: [ARCH-application-layer, ARCH-infrastructure-layer]
 referenced_by: []
@@ -23,11 +23,10 @@ This layer serves as the entry point for all external requests to the applicatio
   - `AuthController`: Handles user login.
   - `UsersController`: Admin-only endpoints for user CRUD operations.
   - `CitizensController`: Operator-focused endpoints for the main call center workflow (`get next`, `update`).
-  - `AdminController`: Endpoints for bulk data operations (import, export, clear).
 - **Data Transfer Objects (DTOs)**: Models used to shape the data for API requests and responses. These are validated using rules defined in the Application Layer.
 - **Middleware**:
   - **Authentication Middleware**: Validates JWT tokens on incoming requests.
-  - **Global Error Handling Middleware**: Catches unhandled exceptions and formats them into a standardized error response.
+  - **Error Handling**: The default ASP.NET Core exception handling is used to manage unhandled exceptions.
 - **Dependency Injection Setup**: Configured in `Program.cs` or `Startup.cs` to wire up services from all layers.
 
 ## Behavior
