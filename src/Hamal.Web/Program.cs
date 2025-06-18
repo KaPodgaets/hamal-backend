@@ -27,7 +27,7 @@ public class Program
             options.AddPolicy("CorsPolicy", policy =>
             {
                 policy
-                    .WithOrigins("http://localhost")  // ✅ safe here because nginx proxies requests from same origin
+                    .WithOrigins("http://localhost","https://Nhr-online.co.il")  // ✅ safe here because nginx proxies requests from same origin
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });

@@ -21,7 +21,7 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
     /// Create new user
     /// </summary>
     /// <response code="200">Returns a CreatedAtActionResult</response>
-    /// <response code="204">Returns a Not Found</response>
+    /// <response code="204">Returns Not Found Response</response>
     /// <response code="401">Unauthorized</response>
     [ProducesResponseType(typeof(CitizenResponse), 200)]
     [ProducesResponseType(204)]
