@@ -14,7 +14,7 @@ public static class WebApplicationExtensions
         // --- HTTP Request Pipeline Configuration ---
         if (app.Environment.IsDevelopment())
         {
-            app.MapOpenApi();
+            // app.MapOpenApi();
 
             app.UseSwagger();
             // app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "NavigatorProject"));

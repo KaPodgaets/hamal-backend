@@ -59,7 +59,7 @@ public static class DependencyInjection
         services.AddControllers();
         
         // Swagger / OpenAPI
-        services.AddOpenApi();
+        // services.AddOpenApi();
         
         services.AddEndpointsApiExplorer();
         
