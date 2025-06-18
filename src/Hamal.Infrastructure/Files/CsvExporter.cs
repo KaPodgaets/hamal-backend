@@ -12,7 +12,7 @@ public class CsvExporter : IFileExporter
         var sb = new StringBuilder();
 
         // Header
-        sb.AppendLine(@"Id,FID,StreetName,BuildingNumber,FlatNumber,FirstName,LastName,FamilyNumber,IsAnsweredTheCall,IsLonely,IsAddressWrong,NewStreetName,NewBuildingNumber,NewFlatNumber,Status,LockedByUserId,LockedUntil,LastUpdatedByUserId,LastUpdatedAt,CreatedAt");
+        sb.AppendLine("Id,FID,StreetName,BuildingNumber,FlatNumber,FirstName,LastName,FamilyNumber,IsAnsweredTheCall,IsLonely,IsAddressWrong,NewStreetName,NewBuildingNumber,NewFlatNumber,HasMamad,HasMiklatPrati,HasMiklatZiburi,HasMobilityRestriction,Status,LockedByUserId,LockedUntil,LastUpdatedByUserId,LastUpdatedAt,CreatedAt");
 
         foreach (var citizen in citizens)
         {
