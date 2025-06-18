@@ -85,6 +85,7 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateCitizen(int id, [FromBody] UpdateCitizenRequest request)
     {
+        // TODO: remove unnecessary fields (that is base fields)
         var command = new UpdateCitizenCommand(
             id,
             request.StreetName,
@@ -119,24 +120,24 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         if (citizen.LockedUntil < DateTime.UtcNow) return BadRequest("The lock on this record has expired.");
 
         // Map validated command to entity
-        citizen.FirstName = command.FirstName;
-        citizen.LastName = command.LastName;
-        citizen.FamilyNumber = command.FamilyNumber;
         citizen.IsLonely = command.IsLonely;
         citizen.IsAddressWrong = command.IsAddressWrong;
         if (command.IsAddressWrong)
         {
             citizen.NewStreetName = command.NewStreetName;
             citizen.NewBuildingNumber = command.NewBuildingNumber;
-            citizen.NewFlatNumber = command.NewFlatNumber.ToString();
+            citizen.NewFlatNumber = command.NewFlatNumber;
         }
+
+        citizen.IsAnsweredTheCall = command.IsAnsweredTheCall;
+        
         
         citizen.StatusInCallCenter = CitizenStatus.Updated;
         citizen.LastUpdatedAt = DateTime.UtcNow;
 
         await dbContext.SaveChangesAsync();
         
-        return NoContent();
+        return Ok();
     }
     
     private static CitizenResponse MapToResponse(CitizenRecord citizenRecord) => new(
