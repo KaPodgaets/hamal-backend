@@ -31,7 +31,8 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
     {
         var userId = User.GetUserId();
 
-        await using var transaction = await dbContext.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable);
+        await using var transaction =
+            await dbContext.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable);
 
         try
         {
@@ -70,7 +71,7 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             return StatusCode(500, "An error occurred while trying to get the next citizen.");
         }
     }
-    
+
     /// <summary>
     /// Update citizen's form
     /// </summary>
@@ -116,7 +117,8 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
 
         if (citizen is null) return NotFound();
         if (citizen.LockedByUserId != userId) return Forbid("This record is not assigned to you.");
-        if (citizen.StatusInCallCenter != CitizenStatus.InProgress) return BadRequest("This record can no longer be updated.");
+        if (citizen.StatusInCallCenter != CitizenStatus.InProgress)
+            return BadRequest("This record can no longer be updated.");
         if (citizen.LockedUntil < DateTime.UtcNow) return BadRequest("The lock on this record has expired.");
 
         // Map validated command to entity
@@ -130,16 +132,16 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         }
 
         citizen.IsAnsweredTheCall = command.IsAnsweredTheCall;
-        
-        
+
+
         citizen.StatusInCallCenter = CitizenStatus.Updated;
         citizen.LastUpdatedAt = DateTime.UtcNow;
 
         await dbContext.SaveChangesAsync();
-        
+
         return Ok();
     }
-    
+
     private static CitizenResponse MapToResponse(CitizenRecord citizenRecord) => new(
         citizenRecord.Id,
         citizenRecord.StreetName,
@@ -156,6 +158,9 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         citizenRecord.Phone1,
         citizenRecord.Phone2,
         citizenRecord.Phone3,
-        citizenRecord.IsAnsweredTheCall
-    );
-} 
+        citizenRecord.IsAnsweredTheCall,
+        citizenRecord.HasMamad,
+        citizenRecord.HasMiklatPrati,
+        citizenRecord.HasMiklatZiburi,
+        citizenRecord.HasMobilityRestriction);
+}

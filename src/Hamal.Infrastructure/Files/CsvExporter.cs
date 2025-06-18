@@ -30,6 +30,10 @@ public class CsvExporter : IFileExporter
             sb.Append(Escape(citizen.NewStreetName)).Append(',');
             sb.Append(Escape(citizen.NewBuildingNumber)).Append(',');
             sb.Append(Escape(citizen.NewFlatNumber)).Append(',');
+            sb.Append(citizen.HasMamad).Append(',');
+            sb.Append(citizen.HasMiklatPrati).Append(',');
+            sb.Append(citizen.HasMiklatZiburi).Append(',');
+            sb.Append(citizen.HasMobilityRestriction).Append(',');
             sb.Append(citizen.StatusInCallCenter).Append(',');
             sb.Append(citizen.LockedByUserId).Append(',');
             sb.Append(FormatDateTime(citizen.LockedUntil)).Append(',');

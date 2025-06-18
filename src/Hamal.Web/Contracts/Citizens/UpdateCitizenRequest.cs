@@ -15,4 +15,8 @@ public record UpdateCitizenRequest(
     string? Phone1,
     string? Phone2,
     string? Phone3,
-    bool IsAnsweredTheCall); 
+    bool IsAnsweredTheCall,
+    bool HasMamad,
+    bool HasMiklatPrati,
+    bool HasMiklatZiburi,
+    bool HasMobilityRestriction); 

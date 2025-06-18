@@ -22,6 +22,10 @@ public class CitizenRecord
     public string? Phone2 { get; set; } = string.Empty;
     public string? Phone3 { get; set; } = string.Empty;
     public bool IsAnsweredTheCall { get; set; }
+    public bool HasMamad { get; set; }
+    public bool HasMiklatPrati { get; set; }
+    public bool HasMiklatZiburi { get; set; }
+    public bool HasMobilityRestriction { get; set; }
     public Guid? LockedByUserId { get; set; }
     public DateTime? LockedUntil { get; set; }
     public DateTime? LastUpdatedAt { get; set; }

@@ -51,6 +51,11 @@ public class CsvParser : IFileParser
                     Phone2 = values[14].Trim(),
                     Phone3 = values[15].Trim(),
                     
+                    HasMamad = bool.Parse(values[16]),
+                    HasMiklatPrati = bool.Parse(values[17]),
+                    HasMiklatZiburi = bool.Parse(values[18]),
+                    HasMobilityRestriction = bool.Parse(values[19]),
+                    
                     StatusInCallCenter = CitizenStatus.Pending,
                     LastUpdatedAt = null,
                     CreatedAt = DateTime.UtcNow,
