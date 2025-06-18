@@ -33,3 +33,9 @@ dotnet ef migrations remove -s .\Hamal.Web -p .\Hamal.Infrastructure
 
 ## front end
 - add api call when cancel form
+
+
+
+```
+dotnet ef migrations script -s ./Hamal.Web -p ./Hamal.Infrastructure -o ./migration.sql
+```
