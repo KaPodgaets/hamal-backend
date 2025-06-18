@@ -19,6 +19,8 @@ public class Program
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        builder.WebHost.UseUrls("http://localhost:5051");
+        
         var configuration = builder.Configuration;
         var services = builder.Services;
 
