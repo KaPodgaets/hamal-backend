@@ -1,29 +1,34 @@
+using System.Text;
+using Hamal.Application.Common.Interfaces;
+using Hamal.Domain.Entities;
+using Hamal.Domain.Enums;
+using Hamal.Infrastructure;
+using Hamal.Infrastructure.Auth;
+using Hamal.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Hamal.Application;
+using Microsoft.OpenApi.Models;
+
 namespace Hamal.Web;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        var configuration = builder.Configuration;
+        var services = builder.Services;
 
-        // Add services to the container.
+        // --- Services Configuration ---
+        services.AddProgramDependencies(configuration);
 
-        builder.Services.AddControllers();
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.Services.AddOpenApi();
+        // --- Application Build ---
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi();
-        }
-
-        app.UseAuthorization();
-
-
-        app.MapControllers();
-
-        app.Run();
+        await app.ConfigureApplication();
+        await app.RunAsync();
     }
 }

@@ -7,7 +7,7 @@ owner: "@dev-team"
 version: v1
 status: current
 created: 2025-06-16
-updated: 2025-06-16
+updated: 2025-06-17
 tags: [infrastructure, persistence, efcore, services]
 depends_on: [ARCH-application-layer]
 referenced_by: []
@@ -26,16 +26,14 @@ The Infrastructure Layer contains implementations for the abstractions (interfac
   - **Migrations**: EF Core migrations are used to manage and version the PostgreSQL database schema.
 - **Services**:
   - **`JwtTokenGenerator`**: Implements `IJwtTokenGenerator` to create and sign JWTs.
-  - **`CsvFileParser`, `XlsxFileParser`**: Implementations of `IFileParser` using libraries like `CsvHelper` and `EPPlus`/`NPOI` to handle bulk data operations.
+  - **`CsvParser` and `CsvExporter`**: Implement `IFileParser` and `IFileExporter` for handling bulk data operations with CSV files.
 - **Background Jobs**:
-  - An implementation of `IBackgroundJobScheduler` using a library like **Hangfire** or **Quartz.NET**. This is used to schedule and run recurring tasks, such as the `ReleaseAbandonedCitizensCommand`.
+  - **`AbandonedCitizenCleanupJob`**: A simple `IHostedService` implementation that runs periodically to release abandoned citizen record locks. It does not use a full-featured scheduling library like Hangfire or Quartz.NET.
 
 ## Behavior
 
 Components in this layer are registered with the dependency injection container. When the Application Layer requires an interface (e.g., `ICitizenRepository`), the DI container provides the concrete implementation from this layer. This allows the application's core logic to remain unaware of whether data is being stored in PostgreSQL, SQL Server, or any other database.
 
 ## Evolution
-
-### Historical
 
 - v1: Initial design specifying EF Core for persistence and a background job scheduler for system reliability.

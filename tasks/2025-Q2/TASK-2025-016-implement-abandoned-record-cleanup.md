@@ -1,12 +1,12 @@
 ---
 id: TASK-2025-016
 title: "Implement Abandoned Record Cleanup Job"
-status: backlog
+status: done
 priority: medium
 type: tech_debt
 estimate: 8h
 created: 2025-06-16
-updated: 2025-06-16
+updated: 2025-06-17
 parents: [TASK-2025-015]
 arch_refs: [ARCH-feature-citizen-workflow, ARCH-infrastructure-layer]
 audit_log:
@@ -15,15 +15,17 @@ audit_log:
       user: "@AI-DocArchitect",
       action: "created with status backlog",
     }
+  - { date: 2025-06-17, user: "@AI-DocArchitect", action: "status: backlog -> done" }
 ---
 
 ## Description
 
-Create a scheduled background job (e.g., using Hangfire or Quartz.NET) that periodically scans for citizen records that have been abandoned. An abandoned record is one with `Status = InProgress` where the `LockedUntil` timestamp has passed. The job should reset these records to make them available again.
+Implemented a background service (`AbandonedCitizenCleanupJob`) that periodically scans for and cleans up abandoned citizen records. This ensures that records don't get permanently locked if an operator's session is interrupted.
 
 ## Acceptance Criteria
 
-- A background job is configured to run on a recurring schedule (e.g., every 5-10 minutes).
-- The job correctly identifies records where `Status = 'InProgress'` and `LockedUntil < NOW()`.
-- For each identified record, the job resets `Status` to `Pending` and clears the `AssignedToUserId` and `LockedUntil` fields.
-- The operation is idempotent and handles errors gracefully.
+- A background service was created that runs every 5 minutes.
+- The service identifies records with `Status = InProgress` and expired `LockedUntil` timestamps.
+- Abandoned records are automatically reset to `Pending` status and returned to the queue.
+- The service uses efficient bulk database operations for performance.
+- Proper error handling and logging are implemented to prevent service crashes.
