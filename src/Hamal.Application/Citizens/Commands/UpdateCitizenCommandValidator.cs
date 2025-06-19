@@ -5,11 +5,11 @@ namespace Hamal.Application.Citizens.Commands;
 
 public class UpdateCitizenCommandValidator : AbstractValidator<UpdateCitizenCommand>
 {
-    // Hebrew letters only, allowing spaces between words
-    private const string HebrewLettersOnly = @"^[\p{IsHebrew} ]+$";
+    // Hebrew letters, spaces, apostrophes, and dashes only
+    private const string HebrewLettersOnly = @"^[\p{IsHebrew}'\- ]+$";
 
-    // Hebrew letters, digits, dash, and spaces — minimum 3 characters
-    private const string HebrewLettersDigitsAndDash = @"^[\p{IsHebrew}0-9\- ]{3,}$";
+    // Hebrew letters, digits, dashes, apostrophes, and spaces — minimum 3 characters
+    private const string HebrewLettersDigitsAndDash = @"^[\p{IsHebrew}0-9'\- ]{3,}$";
 
     // Digits with optional one Hebrew letter, allow optional spaces
     private const string DigitsAndOneHebrewLetter = @"^[0-9\s]*[\p{IsHebrew}]?[0-9\s]*$";
