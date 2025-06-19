@@ -103,7 +103,11 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             request.Phone1,
             request.Phone2,
             request.Phone3,
-            request.IsAnsweredTheCall
+            request.IsAnsweredTheCall,
+            request.HasMamad,
+            request.HasMiklatPrati,
+            request.HasMiklatZiburi,
+            request.HasMobilityRestriction
         );
 
         var validationResult = await validator.ValidateAsync(command);
@@ -132,6 +136,11 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         }
 
         citizen.IsAnsweredTheCall = command.IsAnsweredTheCall;
+        
+        citizen.HasMamad = command.HasMamad;
+        citizen.HasMiklatPrati = command.HasMiklatPrati;
+        citizen.HasMiklatZiburi = command.HasMiklatZiburi;
+        citizen.HasMobilityRestriction = command.HasMobilityRestriction;
 
 
         citizen.StatusInCallCenter = CitizenStatus.Updated;
