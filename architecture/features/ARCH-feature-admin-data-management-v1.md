@@ -22,18 +22,18 @@ This feature provides administrators with tools to manage the entire citizen dat
 - **API Layer**: `AdminController` exposes endpoints for these operations.
 - **Application Layer (Interfaces)**: Defines `IFileParser` and `IFileExporter` to abstract file operations.
 - **Infrastructure Layer (Implementations)**:
-  - `CsvParser`: Implements `IFileParser` for reading citizen data from CSV files.
-  - `CsvExporter`: Implements `IFileExporter` for writing citizen data to CSV files. The export is comprehensive, including all fields from the `CitizenRecord` entity for complete data backup and analysis.
+  - `CsvParser`: Implements `IFileParser` for reading citizen data from CSV files. When importing, it sets a default `AppearanceCount` of 0 for new records.
+  - `CsvExporter`: Implements `IFileExporter` for writing citizen data to CSV files. The export is comprehensive, including all fields from the `CitizenRecord` entity (including `AppearanceCount`) for complete data backup and analysis.
 
 ## Behavior
 
 The system enforces a rigid `export -> clear -> upload` workflow, which is expected to be orchestrated by the client application.
 
 1.  **Export (`GET /api/admin/citizens`)**: The administrator first downloads a copy of the current data as a backup or for reference.
-2.  **Clear (`DELETE /api/admin/citizens`)**: The administrator clears the entire `Citizens` table. This is a destructive, protected action.
-3.  **Upload (`POST /api/admin/citizens`)**: The administrator uploads a new CSV or XLSX file. The system parses this file and performs a bulk insert of the new records into the now-empty table.
+2.  **Clear (`DELETE /api/admin/citizens`)**: The administrator clears the entire `Citizens` table.
+3.  **Upload (`POST /api/admin/citizens`)**: The administrator uploads a new CSV file. The system parses this file and performs a bulk insert of the new records, which are initialized with an `AppearanceCount` of 0.
 
-This process ensures that the system always contains a complete, consistent dataset from a single source file at any given time, avoiding the complexity of partial updates or merges from file uploads.
+This process ensures the system contains a consistent dataset from a single source file, avoiding the complexity of partial updates from file uploads.
 
 ## Evolution
 

@@ -23,7 +23,7 @@ audit_log:
   - {
       date: 2025-06-21,
       user: "@AI-DocArchitect",
-      action: "updated task to reflect implemented entity extensions",
+      action: "updated to include AppearanceCount field",
     }
 ---
 
@@ -34,6 +34,6 @@ Defined the `CitizenRecord` entity and `CitizenStatus` enum in the `Hamal.Domain
 ## Acceptance Criteria
 
 - The `CitizenRecord` entity and `CitizenStatus` enum were defined in the `Hamal.Domain` project.
-- The `CitizenRecord` entity includes fields such as `Fid`, `FirstName`, `LastName`, `Address`, `IsLonely`, `IsAddressWrong`, `Phone1`, `Phone2`, `Phone3`, `IsAnsweredTheCall`, `HasMamad`, `HasMiklatPrati`, `HasMiklatZiburi`, `HasMobilityRestriction`, `StatusInCallCenter`, `LockedByUserId`, and others.
+- The `CitizenRecord` entity includes fields such as `Fid`, `FirstName`, `LastName`, `Address`, `IsLonely`, `IsAddressWrong`, `Phone1`, `Phone2`, `Phone3`, `IsAnsweredTheCall`, `HasMamad`, `HasMiklatPrati`, `HasMiklatZiburi`, `HasMobilityRestriction`, `AppearanceCount`, `StatusInCallCenter`, `LockedByUserId`, and others.
 - `AppDbContext` was updated to include a `DbSet<CitizenRecord>`.
 - An EF Core migration for the `Citizens` table was created and applied successfully.

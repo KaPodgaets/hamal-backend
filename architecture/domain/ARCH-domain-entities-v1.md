@@ -49,6 +49,7 @@ The Domain Layer is the core of the application, representing the business conce
   - `NewBuildingNumber` (string, nullable)
   - `NewFlatNumber` (string, nullable)
   - `StatusInCallCenter` (enum: `CitizenStatus`)
+  - `AppearanceCount` (int): Number of times the record has been presented to an operator.
   - `LockedByUserId` (Guid, nullable, FK to Users.Id)
   - `LastUpdatedByUserId` (Guid, nullable, FK to Users.Id)
   - `LockedUntil` (DateTime?, UTC)

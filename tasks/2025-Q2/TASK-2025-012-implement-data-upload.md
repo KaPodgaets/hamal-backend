@@ -6,7 +6,7 @@ priority: medium
 type: feature
 estimate: 8h
 created: 2025-06-16
-updated: 2025-06-17
+updated: 2025-06-21
 parents: [TASK-2025-011]
 arch_refs: [ARCH-feature-admin-data-management]
 audit_log:
@@ -15,7 +15,16 @@ audit_log:
       user: "@AI-DocArchitect",
       action: "created with status backlog",
     }
-  - { date: 2025-06-17, user: "@AI-DocArchitect", action: "status: backlog -> done" }
+  - {
+      date: 2025-06-17,
+      user: "@AI-DocArchitect",
+      action: "status: backlog -> done",
+    }
+  - {
+      date: 2025-06-21,
+      user: "@AI-DocArchitect",
+      action: "updated task to reflect AppearanceCount initialization",
+    }
 ---
 
 ## Description
@@ -27,5 +36,6 @@ Implemented the `POST /api/admin/citizens/upload` endpoint. This allows an admin
 - The endpoint was created and accepts `multipart/form-data` file uploads.
 - The endpoint is protected and only accessible to Admin users.
 - The service correctly parses the uploaded CSV file and performs a bulk insert of the records into the database.
+- Imported records are initialized with a default `AppearanceCount` of 0.
 - The system returns a `409 Conflict` if the `Citizens` table is not empty before upload.
 - Malformed CSV files or rows result in a descriptive `400 Bad Request` error response.

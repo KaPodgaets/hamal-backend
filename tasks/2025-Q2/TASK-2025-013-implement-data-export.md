@@ -23,7 +23,7 @@ audit_log:
   - {
       date: 2025-06-21,
       user: "@AI-DocArchitect",
-      action: "updated task to reflect comprehensive export fields",
+      action: "updated task to include AppearanceCount in export",
     }
 ---
 
@@ -34,5 +34,5 @@ Implemented the `GET /api/admin/citizens` endpoint. This allows an administrator
 ## Acceptance Criteria
 
 - The endpoint was created and is protected for Admin users only.
-- The endpoint returns a file download containing all records from the `Citizens` table in CSV format. The export includes all `CitizenRecord` fields like `Fid`, `Phone1`, `IsAnsweredTheCall`, `HasMamad`, `StatusInCallCenter`, `LockedByUserId`, etc.
+- The endpoint returns a file download containing all records from the `Citizens` table in CSV format. The export includes all `CitizenRecord` fields like `Fid`, `Phone1`, `IsAnsweredTheCall`, `HasMamad`, `StatusInCallCenter`, `LockedByUserId`, `AppearanceCount`, etc.
 - The filename includes a timestamp to prevent browser caching issues.
