@@ -29,11 +29,17 @@ CREATE TABLE "Citizens" (
     "HasMiklatPrati" boolean NOT NULL,
     "HasMiklatZiburi" boolean NOT NULL,
     "HasMobilityRestriction" boolean NOT NULL,
+    "IsDead" boolean NOT NULL,
+    "HasTemporaryAddress" boolean NOT NULL,
+    "TemporaryStreetName" text,
+    "TemporaryBuildingNumber" text,
+    "TemporaryFlat" text,
     "LockedByUserId" uuid,
     "LockedUntil" timestamp with time zone,
     "LastUpdatedAt" timestamp with time zone,
     "CreatedAt" timestamp with time zone NOT NULL,
     "LastUpdatedByUserId" uuid,
+    "AppearanceCount" integer NOT NULL,
     CONSTRAINT "PK_Citizens" PRIMARY KEY ("Id")
 );
 
@@ -46,7 +52,7 @@ CREATE TABLE "Users" (
 );
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20250618121127_Initial', '8.0.17');
+VALUES ('20250621141405_Initial', '8.0.17');
 
 COMMIT;
 
