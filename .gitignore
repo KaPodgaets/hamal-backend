@@ -408,6 +408,7 @@ FodyWeavers.xsd
 # EF Migrations folders
 **/Migrations/
 
+.env
 
 
 /.idea/.idea.Hamal/.idea/dataSources.xml

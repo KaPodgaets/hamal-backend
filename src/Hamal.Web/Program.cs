@@ -19,6 +19,10 @@ public class Program
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        
+        // Load .env file (optional path: specify if not in root)
+        DotNetEnv.Env.Load(Path.Combine("..", "..", ".env"));
+        
         builder.WebHost.UseUrls("http://localhost:5051");
         
         var configuration = builder.Configuration;
