@@ -41,7 +41,7 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
                 .FromSqlRaw("""
                                 SELECT * FROM "Citizens"
                                 WHERE "StatusInCallCenter" = {0} AND "AppearanceCount" <= 3
-                                ORDER BY "AppearanceCount" desc, "Id"
+                                ORDER BY "AppearanceCount", "Id" desc
                                 FOR UPDATE SKIP LOCKED
                                 LIMIT 1
                             """, pendingStatus)
