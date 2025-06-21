@@ -107,7 +107,12 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             request.HasMamad,
             request.HasMiklatPrati,
             request.HasMiklatZiburi,
-            request.HasMobilityRestriction
+            request.HasMobilityRestriction,
+            request.IsDead,
+            request.HasTemporaryAddress,
+            request.TemporaryStreetName,
+            request.TemporaryBuildingNumber,
+            request.TemporaryFlat
         );
 
         var validationResult = await validator.ValidateAsync(command);
@@ -141,7 +146,15 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         citizen.HasMiklatPrati = command.HasMiklatPrati;
         citizen.HasMiklatZiburi = command.HasMiklatZiburi;
         citizen.HasMobilityRestriction = command.HasMobilityRestriction;
-
+        
+        citizen.IsDead = command.IsDead;
+        citizen.HasTemporaryAddress = command.HasTemporaryAddress;
+        if (command.HasTemporaryAddress)
+        {
+            citizen.TemporaryStreetName = command.TemporaryStreetName;
+            citizen.TemporaryBuildingNumber = command.TemporaryBuildingNumber;
+            citizen.TemporaryFlat = command.TemporaryFlat;
+        }
 
         citizen.StatusInCallCenter = CitizenStatus.Updated;
         citizen.LastUpdatedAt = DateTime.UtcNow;
@@ -171,5 +184,10 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         citizenRecord.HasMamad,
         citizenRecord.HasMiklatPrati,
         citizenRecord.HasMiklatZiburi,
-        citizenRecord.HasMobilityRestriction);
+        citizenRecord.HasMobilityRestriction,
+        citizenRecord.IsDead,
+        citizenRecord.HasTemporaryAddress,
+        citizenRecord.TemporaryStreetName,
+        citizenRecord.TemporaryBuildingNumber,
+        citizenRecord.TemporaryFlat);
 }

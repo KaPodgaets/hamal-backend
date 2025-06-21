@@ -6,7 +6,7 @@ priority: high
 type: feature
 estimate: 4h
 created: 2025-06-16
-updated: 2025-06-17
+updated: 2025-06-21
 parents: [TASK-2025-006]
 arch_refs: [ARCH-domain-entities, ARCH-infrastructure-layer]
 audit_log:
@@ -15,15 +15,25 @@ audit_log:
       user: "@AI-DocArchitect",
       action: "created with status backlog",
     }
-  - { date: 2025-06-17, user: "@AI-DocArchitect", action: "status: backlog -> done" }
+  - {
+      date: 2025-06-17,
+      user: "@AI-DocArchitect",
+      action: "status: backlog -> done",
+    }
+  - {
+      date: 2025-06-21,
+      user: "@AI-DocArchitect",
+      action: "updated task to reflect implemented entity extensions",
+    }
 ---
 
 ## Description
 
-Defined the `Citizen` entity with its specified fields and the `CitizenStatus` enum in the `Hamal.Domain` project. The `AppDbContext` was updated to include the `Citizen` entity, allowing EF Core migrations to create the `Citizens` table.
+Defined the `CitizenRecord` entity and `CitizenStatus` enum in the `Hamal.Domain` project. The `AppDbContext` was updated to include the `CitizenRecord` entity, allowing EF Core migrations to create the `Citizens` table. The model was later extended to include additional fields for phone numbers and various boolean flags related to call outcomes and citizen status.
 
 ## Acceptance Criteria
 
-- The `Citizen` entity and `CitizenStatus` enum were defined in the `Hamal.Domain` project.
-- `AppDbContext` was updated to include a `DbSet<Citizen>`.
-- A new EF Core migration for the `Citizens` table was created and can be applied successfully.
+- The `CitizenRecord` entity and `CitizenStatus` enum were defined in the `Hamal.Domain` project.
+- The `CitizenRecord` entity includes fields such as `Fid`, `FirstName`, `LastName`, `Address`, `IsLonely`, `IsAddressWrong`, `Phone1`, `Phone2`, `Phone3`, `IsAnsweredTheCall`, `HasMamad`, `HasMiklatPrati`, `HasMiklatZiburi`, `HasMobilityRestriction`, `StatusInCallCenter`, `LockedByUserId`, and others.
+- `AppDbContext` was updated to include a `DbSet<CitizenRecord>`.
+- An EF Core migration for the `Citizens` table was created and applied successfully.

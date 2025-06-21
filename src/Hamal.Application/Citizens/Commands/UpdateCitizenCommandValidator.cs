@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using FluentValidation;
 
 namespace Hamal.Application.Citizens.Commands;
@@ -31,6 +30,15 @@ public class UpdateCitizenCommandValidator : AbstractValidator<UpdateCitizenComm
                  .WithMessage("New building number must contain only digits and at most one Hebrew letter.");
             RuleFor(x => x.NewFlatNumber).NotEmpty().Matches(DigitsOnly)
                  .WithMessage("New flat number must contain only digits.");
+        });
+
+        When(x => x.HasTemporaryAddress, () => {
+            RuleFor(x => x.TemporaryStreetName).NotEmpty().Matches(HebrewLettersDigitsAndDash)
+                .WithMessage("Temporary street name must be at least 3 characters and contain only Hebrew letters, digits, or dashes.");
+            RuleFor(x => x.TemporaryBuildingNumber).NotEmpty().Matches(DigitsAndOneHebrewLetter)
+                .WithMessage("Temporary building number must contain only digits and at most one Hebrew letter.");
+            RuleFor(x => x.TemporaryFlat).NotEmpty().Matches(DigitsOnly)
+                .WithMessage("Temporary flat number must contain only digits.");
         });
     }
 } 
