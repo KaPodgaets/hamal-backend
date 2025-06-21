@@ -21,7 +21,8 @@ public static class DependencyInjection
             options.AddPolicy("CorsPolicy", policy =>
             {
                 policy
-                    .WithOrigins("http://localhost","https://Nhr-online.co.il")  // ✅ safe here because nginx proxies requests from same origin
+                    .WithOrigins("http://localhost/","https://Nhr-online.co.il")  
+                    // ✅ safe here because nginx proxies requests from same origin
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
@@ -33,10 +34,8 @@ public static class DependencyInjection
         // Infrastructure Services
         services.AddInfrastructure();
         
-        // Database
-        services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
-        );
+        // Add Database
+        services.AddDatabase(configuration);
         
         // JWT Settings
         var jwtSettings = new JwtSettings();
@@ -89,5 +88,23 @@ public static class DependencyInjection
         });
         
         return services;
+    }
+
+    private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
+    {
+        // Read password
+        var user = Environment.GetEnvironmentVariable("POSTGRES_USER");
+        var password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
+        // Build connection string dynamically
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        if(connectionString is null) 
+            throw new NullReferenceException("connectionString is null");
+        
+        connectionString = connectionString.Replace("{PASSWORD}", password).Replace("{USER}", user);
+        // Database
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseNpgsql(connectionString)
+        );
+        return  services;
     }
 }

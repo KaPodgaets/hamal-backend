@@ -23,16 +23,17 @@ dotnet ef migrations remove -s .\Hamal.Web -p .\Hamal.Infrastructure
 # ToDO list
 - add .env file with admin credentials
 - add autoseeding admin user from .env
-- add https (only for production)
 - add endpoint for cancel from citizen form
 - add counter of calls retry
 - add logic for next citizen record according minimum calls retries
+- add field "is_dead"
+- add field "is_temporary_address"
 
 ## deploy
-- test that cert https on server is still alive
+- change nginx.conf for frontend in docker
 
 ## front end
-- add api call when cancel form
+- 
 
 
 

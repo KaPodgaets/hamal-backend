@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution 
 		.gitignore = .gitignore
 		README.md = README.md
 		docker-compose.yml = docker-compose.yml
+		nginx.conf = nginx.conf
+		.env = .env
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hamal.Application", "src\Hamal.Application\Hamal.Application.csproj", "{90661D2A-EAE2-4087-B6E1-5B7A022EFC08}"

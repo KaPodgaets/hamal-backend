@@ -34,11 +34,17 @@ public static class WebApplicationExtensions
         using var scope = app.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
-        if (!dbContext.Users.Any(u => u.Username == "admin"))
+        
+        var userName = Environment.GetEnvironmentVariable("ADMINUSER_NAME");
+        var password = Environment.GetEnvironmentVariable("ADMINUSER_PASSWORD");
+        if(string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
+            throw new NullReferenceException("Admin username and password are required");
+        
+        if (!dbContext.Users.Any(u => u.Username == userName))
         {
             dbContext.Users.Add(new User
             {
-                Id = Guid.NewGuid(), Username = "admin", PasswordHash = passwordHasher.HashPassword("admin"),
+                Id = Guid.NewGuid(), Username = userName, PasswordHash = passwordHasher.HashPassword(password),
                 Role = Role.Admin
             });
             await dbContext.SaveChangesAsync();
