@@ -21,8 +21,15 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         
         // Load .env file (optional path: specify if not in root)
-        DotNetEnv.Env.Load(Path.Combine("..", "..", ".env"));
-        
+        var devEnvPath = Path.Combine("..", "..", ".env");
+        var prodEnvPath = Path.Combine(Directory.GetCurrentDirectory(), ".env");
+
+        if (File.Exists(devEnvPath) || File.Exists(prodEnvPath) is false)
+            throw new NullReferenceException("<UNK>  .env file not found in dev or publish paths.");
+
+        DotNetEnv.Env.Load(File.Exists(devEnvPath) ? devEnvPath : prodEnvPath);
+
+
         builder.WebHost.UseUrls("http://localhost:5051");
         
         var configuration = builder.Configuration;
