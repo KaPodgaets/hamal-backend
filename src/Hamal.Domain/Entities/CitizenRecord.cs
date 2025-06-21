@@ -36,5 +36,5 @@ public class CitizenRecord
     public DateTime? LastUpdatedAt { get; set; }
     public DateTime CreatedAt { get; set; }
     public Guid? LastUpdatedByUserId { get; set; }
-    
+    public int AppearanceCount { get; set; }
 }

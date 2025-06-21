@@ -12,7 +12,7 @@ public class CsvExporter : IFileExporter
         var sb = new StringBuilder();
 
         // Header
-        sb.AppendLine("Id,FID,StreetName,BuildingNumber,FlatNumber,FirstName,LastName,FamilyNumber,IsAnsweredTheCall,IsLonely,IsAddressWrong,NewStreetName,NewBuildingNumber,NewFlatNumber,HasMamad,HasMiklatPrati,HasMiklatZiburi,HasMobilityRestriction,IsDead,HasTemporaryAddress,TemporaryStreetName,TemporaryBuildingNumber,TemporaryFlat,Status,LockedByUserId,LockedUntil,LastUpdatedByUserId,LastUpdatedAt,CreatedAt");
+        sb.AppendLine("Id,FID,StreetName,BuildingNumber,FlatNumber,FirstName,LastName,FamilyNumber,IsAnsweredTheCall,IsLonely,IsAddressWrong,NewStreetName,NewBuildingNumber,NewFlatNumber,HasMamad,HasMiklatPrati,HasMiklatZiburi,HasMobilityRestriction,IsDead,HasTemporaryAddress,TemporaryStreetName,TemporaryBuildingNumber,TemporaryFlat,Status,LockedByUserId,LockedUntil,LastUpdatedByUserId,LastUpdatedAt,CreatedAt,AppearanceCount");
 
         foreach (var citizen in citizens)
         {
@@ -44,8 +44,8 @@ public class CsvExporter : IFileExporter
             sb.Append(FormatDateTime(citizen.LockedUntil)).Append(',');
             sb.Append(citizen.LastUpdatedByUserId).Append(',');
             sb.Append(FormatDateTime(citizen.LastUpdatedAt)).Append(',');
-            sb.AppendLine(FormatDateTime(citizen.CreatedAt));
-            
+            sb.Append(FormatDateTime(citizen.CreatedAt)).Append(',');
+            sb.AppendLine(citizen.AppearanceCount.ToString());
         }
 
         return Encoding.UTF8.GetBytes(sb.ToString());

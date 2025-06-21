@@ -40,8 +40,8 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             var citizen = await dbContext.Citizens
                 .FromSqlRaw("""
                                 SELECT * FROM "Citizens"
-                                WHERE "StatusInCallCenter" = {0}
-                                ORDER BY "Id"
+                                WHERE "StatusInCallCenter" = {0} AND "AppearanceCount" <= 3
+                                ORDER BY "AppearanceCount" desc, "Id"
                                 FOR UPDATE SKIP LOCKED
                                 LIMIT 1
                             """, pendingStatus)
@@ -54,6 +54,7 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
                 return NoContent();
             }
 
+            citizen.AppearanceCount++;
             citizen.StatusInCallCenter = CitizenStatus.InProgress;
             citizen.LockedByUserId = userId;
             citizen.LockedUntil = DateTime.UtcNow.AddMinutes(30);
