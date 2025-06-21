@@ -56,6 +56,8 @@ public class CsvParser : IFileParser
                     HasMiklatZiburi = bool.Parse(values[18]),
                     HasMobilityRestriction = bool.Parse(values[19]),
                     
+                    AppearanceCount = int.Parse(values[20]),
+                    
                     StatusInCallCenter = CitizenStatus.Pending,
                     LastUpdatedAt = null,
                     CreatedAt = DateTime.UtcNow,

@@ -20,5 +20,10 @@ public record UpdateCitizenCommand(
     bool HasMamad,
     bool HasMiklatPrati,
     bool HasMiklatZiburi,
-    bool HasMobilityRestriction
+    bool HasMobilityRestriction,
+    bool IsDead,
+    bool HasTemporaryAddress,
+    string? TemporaryStreetName,
+    string? TemporaryBuildingNumber,
+    string? TemporaryFlat
 ); 

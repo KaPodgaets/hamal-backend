@@ -26,9 +26,15 @@ public class CitizenRecord
     public bool HasMiklatPrati { get; set; }
     public bool HasMiklatZiburi { get; set; }
     public bool HasMobilityRestriction { get; set; }
+    public bool IsDead { get; set; }
+    public bool HasTemporaryAddress { get; set; }
+    public string? TemporaryStreetName { get; set; }
+    public string? TemporaryBuildingNumber { get; set; }
+    public string? TemporaryFlat { get; set; }
     public Guid? LockedByUserId { get; set; }
     public DateTime? LockedUntil { get; set; }
     public DateTime? LastUpdatedAt { get; set; }
     public DateTime CreatedAt { get; set; }
     public Guid? LastUpdatedByUserId { get; set; }
+    public int AppearanceCount { get; set; }
 }

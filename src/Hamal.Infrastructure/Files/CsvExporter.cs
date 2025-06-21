@@ -12,7 +12,7 @@ public class CsvExporter : IFileExporter
         var sb = new StringBuilder();
 
         // Header
-        sb.AppendLine("Id,FID,StreetName,BuildingNumber,FlatNumber,FirstName,LastName,FamilyNumber,IsAnsweredTheCall,IsLonely,IsAddressWrong,NewStreetName,NewBuildingNumber,NewFlatNumber,HasMamad,HasMiklatPrati,HasMiklatZiburi,HasMobilityRestriction,Status,LockedByUserId,LockedUntil,LastUpdatedByUserId,LastUpdatedAt,CreatedAt");
+        sb.AppendLine("Id,FID,StreetName,BuildingNumber,FlatNumber,FirstName,LastName,FamilyNumber,IsAnsweredTheCall,IsLonely,IsAddressWrong,NewStreetName,NewBuildingNumber,NewFlatNumber,HasMamad,HasMiklatPrati,HasMiklatZiburi,HasMobilityRestriction,IsDead,HasTemporaryAddress,TemporaryStreetName,TemporaryBuildingNumber,TemporaryFlat,Status,LockedByUserId,LockedUntil,LastUpdatedByUserId,LastUpdatedAt,CreatedAt,AppearanceCount");
 
         foreach (var citizen in citizens)
         {
@@ -34,13 +34,18 @@ public class CsvExporter : IFileExporter
             sb.Append(citizen.HasMiklatPrati).Append(',');
             sb.Append(citizen.HasMiklatZiburi).Append(',');
             sb.Append(citizen.HasMobilityRestriction).Append(',');
+            sb.Append(citizen.IsDead).Append(',');
+            sb.Append(citizen.HasTemporaryAddress).Append(',');
+            sb.Append(Escape(citizen.TemporaryStreetName)).Append(',');
+            sb.Append(Escape(citizen.TemporaryBuildingNumber)).Append(',');
+            sb.Append(Escape(citizen.TemporaryFlat)).Append(',');
             sb.Append(citizen.StatusInCallCenter).Append(',');
             sb.Append(citizen.LockedByUserId).Append(',');
             sb.Append(FormatDateTime(citizen.LockedUntil)).Append(',');
             sb.Append(citizen.LastUpdatedByUserId).Append(',');
             sb.Append(FormatDateTime(citizen.LastUpdatedAt)).Append(',');
-            sb.AppendLine(FormatDateTime(citizen.CreatedAt));
-            
+            sb.Append(FormatDateTime(citizen.CreatedAt)).Append(',');
+            sb.AppendLine(citizen.AppearanceCount.ToString());
         }
 
         return Encoding.UTF8.GetBytes(sb.ToString());

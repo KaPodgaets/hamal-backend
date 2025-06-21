@@ -7,7 +7,7 @@ owner: "@dev-team"
 version: v1
 status: current
 created: 2025-06-16
-updated: 2025-06-16
+updated: 2025-06-21
 tags: [domain, entities, data-model]
 depends_on: []
 referenced_by: []
@@ -26,23 +26,35 @@ The Domain Layer is the core of the application, representing the business conce
   - `Username` (string, unique)
   - `PasswordHash` (string)
   - `Role` (enum: `Role`)
-- **`Citizen`**: Represents a record to be processed by a call center operator.
+- **`CitizenRecord`**: Represents a record to be processed by a call center operator.
   - `Id` (int, PK, Database-Generated Identity)
+  - `Fid` (int)
   - `StreetName` (string)
   - `BuildingNumber` (string)
   - `FlatNumber` (string)
   - `FirstName` (string)
   - `LastName` (string)
   - `FamilyNumber` (int)
+  - `Phone1` (string, nullable)
+  - `Phone2` (string, nullable)
+  - `Phone3` (string, nullable)
   - `IsLonely` (boolean)
   - `IsAddressWrong` (boolean)
+  - `IsAnsweredTheCall` (boolean)
+  - `HasMamad` (boolean)
+  - `HasMiklatPrati` (boolean)
+  - `HasMiklatZiburi` (boolean)
+  - `HasMobilityRestriction` (boolean)
   - `NewStreetName` (string, nullable)
   - `NewBuildingNumber` (string, nullable)
   - `NewFlatNumber` (string, nullable)
-  - `Status` (enum: `CitizenStatus`)
-  - `AssignedToUserId` (Guid, nullable, FK to Users.Id)
+  - `StatusInCallCenter` (enum: `CitizenStatus`)
+  - `AppearanceCount` (int): Number of times the record has been presented to an operator.
+  - `LockedByUserId` (Guid, nullable, FK to Users.Id)
+  - `LastUpdatedByUserId` (Guid, nullable, FK to Users.Id)
   - `LockedUntil` (DateTime?, UTC)
-  - `LastUpdatedAt` (DateTime, UTC)
+  - `LastUpdatedAt` (DateTime?, UTC)
+  - `CreatedAt` (DateTime, UTC)
 
 ### Enums
 

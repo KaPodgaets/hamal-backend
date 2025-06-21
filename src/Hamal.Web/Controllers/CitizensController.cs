@@ -40,8 +40,8 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             var citizen = await dbContext.Citizens
                 .FromSqlRaw("""
                                 SELECT * FROM "Citizens"
-                                WHERE "StatusInCallCenter" = {0}
-                                ORDER BY "Id"
+                                WHERE "StatusInCallCenter" = {0} AND "AppearanceCount" <= 3
+                                ORDER BY "AppearanceCount", "Id" desc
                                 FOR UPDATE SKIP LOCKED
                                 LIMIT 1
                             """, pendingStatus)
@@ -54,6 +54,7 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
                 return NoContent();
             }
 
+            citizen.AppearanceCount++;
             citizen.StatusInCallCenter = CitizenStatus.InProgress;
             citizen.LockedByUserId = userId;
             citizen.LockedUntil = DateTime.UtcNow.AddMinutes(30);
@@ -107,7 +108,12 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             request.HasMamad,
             request.HasMiklatPrati,
             request.HasMiklatZiburi,
-            request.HasMobilityRestriction
+            request.HasMobilityRestriction,
+            request.IsDead,
+            request.HasTemporaryAddress,
+            request.TemporaryStreetName,
+            request.TemporaryBuildingNumber,
+            request.TemporaryFlat
         );
 
         var validationResult = await validator.ValidateAsync(command);
@@ -141,7 +147,15 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         citizen.HasMiklatPrati = command.HasMiklatPrati;
         citizen.HasMiklatZiburi = command.HasMiklatZiburi;
         citizen.HasMobilityRestriction = command.HasMobilityRestriction;
-
+        
+        citizen.IsDead = command.IsDead;
+        citizen.HasTemporaryAddress = command.HasTemporaryAddress;
+        if (command.HasTemporaryAddress)
+        {
+            citizen.TemporaryStreetName = command.TemporaryStreetName;
+            citizen.TemporaryBuildingNumber = command.TemporaryBuildingNumber;
+            citizen.TemporaryFlat = command.TemporaryFlat;
+        }
 
         citizen.StatusInCallCenter = CitizenStatus.Updated;
         citizen.LastUpdatedAt = DateTime.UtcNow;
@@ -171,5 +185,10 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         citizenRecord.HasMamad,
         citizenRecord.HasMiklatPrati,
         citizenRecord.HasMiklatZiburi,
-        citizenRecord.HasMobilityRestriction);
+        citizenRecord.HasMobilityRestriction,
+        citizenRecord.IsDead,
+        citizenRecord.HasTemporaryAddress,
+        citizenRecord.TemporaryStreetName,
+        citizenRecord.TemporaryBuildingNumber,
+        citizenRecord.TemporaryFlat);
 }
