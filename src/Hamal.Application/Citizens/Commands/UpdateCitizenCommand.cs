@@ -22,7 +22,9 @@ public record UpdateCitizenCommand(
     bool HasMiklatZiburi,
     bool HasMobilityRestriction,
     bool IsDead,
+    bool IsLeftTheCity,
     bool HasTemporaryAddress,
+    bool IsTemporaryAbroad,
     string? TemporaryStreetName,
     string? TemporaryBuildingNumber,
     string? TemporaryFlat

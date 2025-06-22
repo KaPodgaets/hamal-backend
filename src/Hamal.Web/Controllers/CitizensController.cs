@@ -40,7 +40,10 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             var citizen = await dbContext.Citizens
                 .FromSqlRaw("""
                                 SELECT * FROM "Citizens"
-                                WHERE "StatusInCallCenter" = {0} AND "AppearanceCount" <= 3
+                                WHERE 
+                                    "StatusInCallCenter" = {0} 
+                                    AND "AppearanceCount" <= 3 
+                                    AND "IsAnsweredTheCall" = FALSE
                                 ORDER BY "AppearanceCount", "Id" desc
                                 FOR UPDATE SKIP LOCKED
                                 LIMIT 1
@@ -110,7 +113,9 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             request.HasMiklatZiburi,
             request.HasMobilityRestriction,
             request.IsDead,
+            request.IsLeftTheCity,
             request.HasTemporaryAddress,
+            request.IsTemporaryAbroad,
             request.TemporaryStreetName,
             request.TemporaryBuildingNumber,
             request.TemporaryFlat
@@ -149,8 +154,11 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         citizen.HasMobilityRestriction = command.HasMobilityRestriction;
         
         citizen.IsDead = command.IsDead;
+        citizen.IsLeftTheCity = command.IsLeftTheCity;
         citizen.HasTemporaryAddress = command.HasTemporaryAddress;
-        if (command.HasTemporaryAddress)
+        citizen.IsTemporaryAbroad = command.IsTemporaryAbroad;
+        
+        if (command is { HasTemporaryAddress: true, IsTemporaryAbroad: false })
         {
             citizen.TemporaryStreetName = command.TemporaryStreetName;
             citizen.TemporaryBuildingNumber = command.TemporaryBuildingNumber;
@@ -187,7 +195,9 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         citizenRecord.HasMiklatZiburi,
         citizenRecord.HasMobilityRestriction,
         citizenRecord.IsDead,
+        citizenRecord.IsLeftTheCity,
         citizenRecord.HasTemporaryAddress,
+        citizenRecord.IsTemporaryAbroad,
         citizenRecord.TemporaryStreetName,
         citizenRecord.TemporaryBuildingNumber,
         citizenRecord.TemporaryFlat);

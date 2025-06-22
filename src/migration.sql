@@ -30,7 +30,9 @@ CREATE TABLE "Citizens" (
     "HasMiklatZiburi" boolean NOT NULL,
     "HasMobilityRestriction" boolean NOT NULL,
     "IsDead" boolean NOT NULL,
+    "IsLeftTheCity" boolean NOT NULL,
     "HasTemporaryAddress" boolean NOT NULL,
+    "IsTemporaryAbroad" boolean NOT NULL,
     "TemporaryStreetName" text,
     "TemporaryBuildingNumber" text,
     "TemporaryFlat" text,
@@ -52,7 +54,7 @@ CREATE TABLE "Users" (
 );
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20250621141405_Initial', '8.0.17');
+VALUES ('20250622171612_Initial', '8.0.17');
 
 COMMIT;
 
