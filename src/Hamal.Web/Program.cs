@@ -24,7 +24,7 @@ public class Program
         var devEnvPath = Path.Combine("..", "..", ".env");
         var prodEnvPath = Path.Combine(Directory.GetCurrentDirectory(), ".env");
 
-        if (File.Exists(devEnvPath) || File.Exists(prodEnvPath) is false)
+        if ((File.Exists(devEnvPath) || File.Exists(prodEnvPath)) is false)
         {
             Console.WriteLine("env path not found");
             throw new NullReferenceException("<UNK>  .env file not found in dev or publish paths.");
