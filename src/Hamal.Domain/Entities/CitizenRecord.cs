@@ -27,7 +27,9 @@ public class CitizenRecord
     public bool HasMiklatZiburi { get; set; }
     public bool HasMobilityRestriction { get; set; }
     public bool IsDead { get; set; }
+    public bool IsLeftTheCity { get; set; }
     public bool HasTemporaryAddress { get; set; }
+    public bool IsTemporaryAbroad { get; set; }
     public string? TemporaryStreetName { get; set; }
     public string? TemporaryBuildingNumber { get; set; }
     public string? TemporaryFlat { get; set; }

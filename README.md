@@ -19,24 +19,7 @@ dotnet ef database update 0 -s .\Hamal.Web -p .\Hamal.Infrastructure
 ```
 dotnet ef migrations remove -s .\Hamal.Web -p .\Hamal.Infrastructure
 ```
-
-# ToDO list
-- add .env file with admin credentials
-- add autoseeding admin user from .env
-- add endpoint for cancel from citizen form
-- add counter of calls retry
-- add logic for next citizen record according minimum calls retries
-- add field "is_dead"
-- add field "is_temporary_address"
-
-## deploy
-- change nginx.conf for frontend in docker
-
-## front end
-- 
-
-
-
+### Create sql script file for migration
 ```
-dotnet ef migrations script -s ./Hamal.Web -p ./Hamal.Infrastructure -o ./migration.sql
+dotnet ef migrations script -s .\Hamal.Web -p .\Hamal.Infrastructure -o .\migration.sql
 ```
