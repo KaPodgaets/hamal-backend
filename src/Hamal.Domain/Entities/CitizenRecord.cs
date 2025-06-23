@@ -42,4 +42,7 @@ public class CitizenRecord
     public DateTime? FirstTimeAppearance { get; set; }
     public DateTime? SecondTimeAppearance { get; set; }
     public DateTime? ThirdTimeAppearance { get; set; }
+    
+    // Navigation property
+    public CallcenterCase? CallcenterCase { get; set; }
 }

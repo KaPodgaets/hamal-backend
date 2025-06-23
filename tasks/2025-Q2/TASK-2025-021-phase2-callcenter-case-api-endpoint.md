@@ -1,7 +1,7 @@
 ---
 id: TASK-2025-021
 title: "Phase 2: Callcenter Case API Endpoint Implementation"
-status: backlog
+status: done
 priority: high
 type: feature
 estimate: 8h
@@ -14,6 +14,11 @@ audit_log:
       date: 2025-06-24,
       user: "@AI-DocArchitect",
       action: "created with status backlog",
+    }
+  - {
+      date: 2025-06-24,
+      user: "@AI-DocArchitect",
+      action: "status: backlog -> done; completed implementation",
     }
 ---
 

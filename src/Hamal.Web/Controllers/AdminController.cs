@@ -41,7 +41,10 @@ public class AdminController(
     [HttpGet("")]
     public async Task<IActionResult> ExportCitizens()
     {
-        var citizens = await dbContext.Citizens.AsNoTracking().ToListAsync();
+        var citizens = await dbContext.Citizens
+            .Include(c => c.CallcenterCase)
+            .AsNoTracking()
+            .ToListAsync();
         var fileBytes = fileExporter.ExportToCsv(citizens);
         
         return File(fileBytes, "text/csv", $"citizens-export-{DateTime.UtcNow:yyyy-MM-dd-HH-mm-ss}.csv");

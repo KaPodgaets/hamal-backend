@@ -19,7 +19,7 @@ public class CsvExporter : IFileExporter
                       "IsTemporaryAbroad,TemporaryStreetName,TemporaryBuildingNumber,TemporaryFlat," +
                       "Status,LockedByUserId,LockedUntil,LastUpdatedByUserId,LastUpdatedAt," +
                       "CreatedAt,AppearanceCount,FirstTimeAppearance,SecondTimeAppearance," +
-                      "ThirdTimeAppearance");
+                      "ThirdTimeAppearance,callcenter_case_number");
 
         foreach (var citizen in citizens)
         {
@@ -57,7 +57,8 @@ public class CsvExporter : IFileExporter
             sb.Append(citizen.AppearanceCount.ToString()).Append(',');
             sb.Append(FormatDateTime(citizen.FirstTimeAppearance)).Append(',');
             sb.Append(FormatDateTime(citizen.SecondTimeAppearance)).Append(',');
-            sb.AppendLine(FormatDateTime(citizen.ThirdTimeAppearance));
+            sb.Append(FormatDateTime(citizen.ThirdTimeAppearance)).Append(',');
+            sb.AppendLine(Escape(citizen.CallcenterCase?.CallcenterCaseNumber));
         }
 
         return Encoding.UTF8.GetBytes(sb.ToString());

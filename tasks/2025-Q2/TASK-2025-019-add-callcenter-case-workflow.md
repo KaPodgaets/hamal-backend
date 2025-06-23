@@ -1,7 +1,7 @@
 ---
 id: TASK-2025-019
 title: "Feature: Add CallcenterCase Entity and Workflow"
-status: backlog
+status: done
 priority: high
 type: feature
 estimate: 24h
@@ -17,6 +17,11 @@ audit_log:
       date: 2025-06-24,
       user: "@AI-DocArchitect",
       action: "created with status backlog",
+    }
+  - {
+      date: 2025-06-24,
+      user: "@AI-DocArchitect",
+      action: "status: backlog -> done; all child tasks completed",
     }
 ---
 

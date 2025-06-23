@@ -1,7 +1,7 @@
 ---
 id: TASK-2025-020
 title: "Phase 1: Callcenter Case Domain & Data Model"
-status: backlog
+status: done
 priority: high
 type: feature
 estimate: 4h
@@ -14,6 +14,11 @@ audit_log:
       date: 2025-06-24,
       user: "@AI-DocArchitect",
       action: "created with status backlog",
+    }
+  - {
+      date: 2025-06-24,
+      user: "@AI-DocArchitect",
+      action: "status: backlog -> done; completed implementation",
     }
 ---
 

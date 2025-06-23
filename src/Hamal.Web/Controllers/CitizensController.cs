@@ -187,6 +187,50 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         return Ok();
     }
 
+    /// <summary>
+    /// Create a callcenter case for a citizen
+    /// </summary>
+    /// <response code="201">Created</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="404">Citizen not found</response>
+    /// <response code="409">Case already exists for this citizen</response>
+    [ProducesResponseType(201)]
+    [ProducesResponseType(401)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(409)]
+    [HttpPost("106-case")]
+    public async Task<IActionResult> CreateCallcenterCase([FromBody] CreateCallcenterCaseRequest request)
+    {
+        // Find the citizen
+        var citizen = await dbContext.Citizens.FindAsync(request.Id);
+        if (citizen is null)
+        {
+            return NotFound("Citizen not found.");
+        }
+
+        // Check if a case already exists for this citizen
+        var existingCase = await dbContext.CallcenterCases
+            .FirstOrDefaultAsync(c => c.CitizenRecordId == request.Id);
+        
+        if (existingCase is not null)
+        {
+            return Conflict("A case already exists for this citizen.");
+        }
+
+        // Create the new case
+        var callcenterCase = new CallcenterCase
+        {
+            CallcenterCaseNumber = request.CaseNumber,
+            CitizenRecordId = request.Id,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        dbContext.CallcenterCases.Add(callcenterCase);
+        await dbContext.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(CreateCallcenterCase), new { id = callcenterCase.Id }, callcenterCase);
+    }
+
     private static CitizenResponse MapToResponse(CitizenRecord citizenRecord) => new(
         citizenRecord.Id,
         citizenRecord.StreetName,
