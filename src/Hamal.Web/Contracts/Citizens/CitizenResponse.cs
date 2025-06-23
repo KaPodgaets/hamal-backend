@@ -29,4 +29,8 @@ public record CitizenResponse(
     bool  IsTemporaryAbroad,
     string? TemporaryStreetName,
     string? TemporaryBuildingNumber,
-    string? TemporaryFlat); 
+    string? TemporaryFlat,
+    int AppearanceCount,
+    DateTime? FirstAppearanceTimestamp,
+    DateTime? SecondAppearanceTimestamp,
+    DateTime? ThirdAppearanceTimestamp); 

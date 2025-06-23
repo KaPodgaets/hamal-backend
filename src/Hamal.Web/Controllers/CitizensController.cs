@@ -214,5 +214,10 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         citizenRecord.IsTemporaryAbroad,
         citizenRecord.TemporaryStreetName,
         citizenRecord.TemporaryBuildingNumber,
-        citizenRecord.TemporaryFlat);
+        citizenRecord.TemporaryFlat,
+        citizenRecord.AppearanceCount,
+        citizenRecord.FirstTimeAppearance,
+        citizenRecord.SecondTimeAppearance,
+        citizenRecord.ThirdTimeAppearance
+        );
 }
