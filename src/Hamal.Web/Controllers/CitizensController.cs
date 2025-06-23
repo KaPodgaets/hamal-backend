@@ -58,6 +58,20 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             }
 
             citizen.AppearanceCount++;
+            
+            switch (citizen.AppearanceCount)
+            {
+                case 1:
+                    citizen.FirstTimeAppearance = DateTime.Now;
+                    break;
+                case 2:
+                    citizen.SecondTimeAppearance = DateTime.Now;
+                    break;
+                case 3:
+                    citizen.ThirdTimeAppearance = DateTime.Now;
+                    break;
+            }
+
             citizen.StatusInCallCenter = CitizenStatus.InProgress;
             citizen.LockedByUserId = userId;
             citizen.LockedUntil = DateTime.UtcNow.AddMinutes(30);
