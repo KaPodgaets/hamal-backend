@@ -62,13 +62,13 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             switch (citizen.AppearanceCount)
             {
                 case 1:
-                    citizen.FirstTimeAppearance = DateTime.Now;
+                    citizen.FirstTimeAppearance = DateTime.UtcNow;
                     break;
                 case 2:
-                    citizen.SecondTimeAppearance = DateTime.Now;
+                    citizen.SecondTimeAppearance = DateTime.UtcNow;
                     break;
                 case 3:
-                    citizen.ThirdTimeAppearance = DateTime.Now;
+                    citizen.ThirdTimeAppearance = DateTime.UtcNow;
                     break;
             }
 

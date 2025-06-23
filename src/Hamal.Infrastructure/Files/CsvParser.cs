@@ -1,3 +1,4 @@
+using System.Globalization;
 using Hamal.Application.Common.Interfaces;
 using Hamal.Domain.Entities;
 using Hamal.Domain.Enums;
@@ -28,14 +29,38 @@ public class CsvParser : IFileParser
 
             var values = line.Split(',');
             if (values.Length < 15) throw new CsvParsingException($"Line {lineNumber} has too few columns. Expected 15.");
-
+            
             try
             {
+                var fid = int.Parse(values[0]);
+                var firstName = values[1].Trim();
+
+                var firstTimeAppearance = string.IsNullOrWhiteSpace(values[21])
+                    ? (DateTime?)null
+                    : DateTime.Parse(
+                        values[21],
+                        null,
+                        DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
+
+                var secondTimeAppearance = string.IsNullOrWhiteSpace(values[22])
+                    ? (DateTime?)null
+                    : DateTime.Parse(
+                        values[21],
+                        null,
+                        DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
+
+                var thirdTimeAppearance = string.IsNullOrWhiteSpace(values[23])
+                    ? (DateTime?)null
+                    : DateTime.Parse(
+                        values[21],
+                        null,
+                        DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
+                
                 var citizen = new CitizenRecord
                 {
-                    Fid = int.Parse(values[0]),
-                    FirstName = values[2].Trim(),
-                    LastName = values[1].Trim(),
+                    Fid = fid,
+                    FirstName = firstName,
+                    LastName = values[2].Trim(),
                     StreetName = values[3].Trim(),
                     BuildingNumber = values[4].Trim(),
                     FlatNumber = values[5].Trim(),
@@ -57,6 +82,9 @@ public class CsvParser : IFileParser
                     HasMobilityRestriction = bool.Parse(values[19]),
                     
                     AppearanceCount = int.Parse(values[20]),
+                    FirstTimeAppearance = firstTimeAppearance,
+                    SecondTimeAppearance = secondTimeAppearance,
+                    ThirdTimeAppearance = thirdTimeAppearance,
                     
                     StatusInCallCenter = CitizenStatus.Pending,
                     LastUpdatedAt = null,
@@ -67,6 +95,7 @@ public class CsvParser : IFileParser
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error parsing line {lineNumber}: {ex.Message}");
                 throw new CsvParsingException($"Error parsing line {lineNumber}: {ex.Message}");
             }
         }

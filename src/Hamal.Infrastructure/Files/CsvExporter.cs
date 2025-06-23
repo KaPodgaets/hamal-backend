@@ -12,7 +12,14 @@ public class CsvExporter : IFileExporter
         var sb = new StringBuilder();
 
         // Header
-        sb.AppendLine("Id,FID,StreetName,BuildingNumber,FlatNumber,FirstName,LastName,FamilyNumber,IsAnsweredTheCall,IsLonely,IsAddressWrong,NewStreetName,NewBuildingNumber,NewFlatNumber,HasMamad,HasMiklatPrati,HasMiklatZiburi,HasMobilityRestriction,IsDead,IsLeftTheCityPermanent,HasTemporaryAddress,IsTemporaryAbroad,TemporaryStreetName,TemporaryBuildingNumber,TemporaryFlat,Status,LockedByUserId,LockedUntil,LastUpdatedByUserId,LastUpdatedAt,CreatedAt,AppearanceCount");
+        sb.AppendLine("Id,FID,StreetName,BuildingNumber,FlatNumber,FirstName,LastName," +
+                      "FamilyNumber,IsAnsweredTheCall,IsLonely,IsAddressWrong,NewStreetName," +
+                      "NewBuildingNumber,NewFlatNumber,HasMamad,HasMiklatPrati,HasMiklatZiburi," +
+                      "HasMobilityRestriction,IsDead,IsLeftTheCityPermanent,HasTemporaryAddress," +
+                      "IsTemporaryAbroad,TemporaryStreetName,TemporaryBuildingNumber,TemporaryFlat," +
+                      "Status,LockedByUserId,LockedUntil,LastUpdatedByUserId,LastUpdatedAt," +
+                      "CreatedAt,AppearanceCount,FirstTimeAppearance,SecondTimeAppearance," +
+                      "ThirdTimeAppearance");
 
         foreach (var citizen in citizens)
         {
@@ -47,7 +54,10 @@ public class CsvExporter : IFileExporter
             sb.Append(citizen.LastUpdatedByUserId).Append(',');
             sb.Append(FormatDateTime(citizen.LastUpdatedAt)).Append(',');
             sb.Append(FormatDateTime(citizen.CreatedAt)).Append(',');
-            sb.AppendLine(citizen.AppearanceCount.ToString());
+            sb.Append(citizen.AppearanceCount.ToString()).Append(',');
+            sb.Append(FormatDateTime(citizen.FirstTimeAppearance)).Append(',');
+            sb.Append(FormatDateTime(citizen.SecondTimeAppearance)).Append(',');
+            sb.AppendLine(FormatDateTime(citizen.ThirdTimeAppearance));
         }
 
         return Encoding.UTF8.GetBytes(sb.ToString());
