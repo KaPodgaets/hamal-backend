@@ -6,7 +6,7 @@ priority: medium
 type: feature
 estimate: 8h
 created: 2025-06-16
-updated: 2025-06-21
+updated: 2025-06-24
 parents: [TASK-2025-011]
 arch_refs: [ARCH-feature-admin-data-management]
 audit_log:
@@ -25,11 +25,16 @@ audit_log:
       user: "@AI-DocArchitect",
       action: "updated task to reflect AppearanceCount initialization",
     }
+  - {
+      date: 2025-06-24,
+      user: "@AI-DocArchitect",
+      action: "corrected endpoint path in description",
+    }
 ---
 
 ## Description
 
-Implemented the `POST /api/admin/citizens/upload` endpoint. This allows an administrator to upload a CSV file to populate the `Citizens` table. This operation is intended to be performed on an empty table as part of the data replacement workflow.
+Implemented the `POST /api/admin/citizens` endpoint. This allows an administrator to upload a CSV file to populate the `Citizens` table. This operation is intended to be performed on an empty table as part of the data replacement workflow.
 
 ## Acceptance Criteria
 

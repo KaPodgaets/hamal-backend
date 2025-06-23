@@ -7,7 +7,7 @@ owner: "@dev-team"
 version: v1
 status: current
 created: 2025-06-16
-updated: 2025-06-17
+updated: 2025-06-24
 tags: [api, presentation, aspnetcore]
 depends_on: [ARCH-application-layer, ARCH-infrastructure-layer]
 referenced_by: []
@@ -22,6 +22,7 @@ This layer serves as the entry point for all external requests to the applicatio
 - **Controllers**:
   - `AuthController`: Handles user login.
   - `UsersController`: Admin-only endpoints for user CRUD operations.
+  - `AdminController`: Admin-only endpoints for bulk data operations (upload, export, clear).
   - `CitizensController`: Operator-focused endpoints for the main call center workflow (`get next`, `update`).
 - **Data Transfer Objects (DTOs)**: Models used to shape the data for API requests and responses. These are validated using rules defined in the Application Layer.
 - **Middleware**:
