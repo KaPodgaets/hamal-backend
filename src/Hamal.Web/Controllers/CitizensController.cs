@@ -39,12 +39,16 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             var pendingStatus = nameof(CitizenStatus.Pending);
             var citizen = await dbContext.Citizens
                 .FromSqlRaw("""
-                                SELECT * FROM "Citizens"
+                                SELECT c.* FROM "Citizens" c
+                                LEFT JOIN "CallcenterCases" cc ON c."Id" = cc."CitizenRecordId"
                                 WHERE 
-                                    "StatusInCallCenter" = {0} 
-                                    AND "AppearanceCount" <= 3 
-                                    AND "IsAnsweredTheCall" = FALSE
-                                ORDER BY "AppearanceCount", "Id" desc
+                                    c."StatusInCallCenter" = {0} 
+                                    AND c."AppearanceCount" <= 4
+                                    AND c."IsAnsweredTheCall" = FALSE
+                                    AND c."IsLeftTheCity" = FALSE
+                                    AND c."IsDead" = FALSE
+                                    AND cc."Id" IS NULL
+                                ORDER BY c."AppearanceCount", c."Id" desc
                                 FOR UPDATE SKIP LOCKED
                                 LIMIT 1
                             """, pendingStatus)
