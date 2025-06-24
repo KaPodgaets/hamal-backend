@@ -39,4 +39,10 @@ public class CitizenRecord
     public DateTime CreatedAt { get; set; }
     public Guid? LastUpdatedByUserId { get; set; }
     public int AppearanceCount { get; set; }
+    public DateTime? FirstTimeAppearance { get; set; }
+    public DateTime? SecondTimeAppearance { get; set; }
+    public DateTime? ThirdTimeAppearance { get; set; }
+    
+    // Navigation property
+    public CallcenterCase? CallcenterCase { get; set; }
 }

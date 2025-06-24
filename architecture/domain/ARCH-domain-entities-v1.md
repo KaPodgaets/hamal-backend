@@ -7,7 +7,7 @@ owner: "@dev-team"
 version: v1
 status: current
 created: 2025-06-16
-updated: 2025-06-21
+updated: 2025-06-24
 tags: [domain, entities, data-model]
 depends_on: []
 referenced_by: []
@@ -48,6 +48,13 @@ The Domain Layer is the core of the application, representing the business conce
   - `NewStreetName` (string, nullable)
   - `NewBuildingNumber` (string, nullable)
   - `NewFlatNumber` (string, nullable)
+  - `IsDead` (boolean)
+  - `IsLeftTheCity` (boolean)
+  - `HasTemporaryAddress` (boolean)
+  - `IsTemporaryAbroad` (boolean)
+  - `TemporaryStreetName` (string, nullable)
+  - `TemporaryBuildingNumber` (string, nullable)
+  - `TemporaryFlat` (string, nullable)
   - `StatusInCallCenter` (enum: `CitizenStatus`)
   - `AppearanceCount` (int): Number of times the record has been presented to an operator.
   - `LockedByUserId` (Guid, nullable, FK to Users.Id)
@@ -55,6 +62,9 @@ The Domain Layer is the core of the application, representing the business conce
   - `LockedUntil` (DateTime?, UTC)
   - `LastUpdatedAt` (DateTime?, UTC)
   - `CreatedAt` (DateTime, UTC)
+  - `FirstTimeAppearance` (DateTime?, UTC)
+  - `SecondTimeAppearance` (DateTime?, UTC)
+  - `ThirdTimeAppearance` (DateTime?, UTC)
 
 ### Enums
 

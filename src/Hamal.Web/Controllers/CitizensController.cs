@@ -39,12 +39,16 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             var pendingStatus = nameof(CitizenStatus.Pending);
             var citizen = await dbContext.Citizens
                 .FromSqlRaw("""
-                                SELECT * FROM "Citizens"
+                                SELECT c.* FROM "Citizens" c
+                                LEFT JOIN "CallcenterCases" cc ON c."Id" = cc."CitizenRecordId"
                                 WHERE 
-                                    "StatusInCallCenter" = {0} 
-                                    AND "AppearanceCount" <= 3 
-                                    AND "IsAnsweredTheCall" = FALSE
-                                ORDER BY "AppearanceCount", "Id" desc
+                                    c."StatusInCallCenter" = {0} 
+                                    AND c."AppearanceCount" <= 4
+                                    AND c."IsAnsweredTheCall" = FALSE
+                                    AND c."IsLeftTheCity" = FALSE
+                                    AND c."IsDead" = FALSE
+                                    AND cc."Id" IS NULL
+                                ORDER BY c."AppearanceCount", c."Id" desc
                                 FOR UPDATE SKIP LOCKED
                                 LIMIT 1
                             """, pendingStatus)
@@ -58,6 +62,20 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             }
 
             citizen.AppearanceCount++;
+            
+            switch (citizen.AppearanceCount)
+            {
+                case 1:
+                    citizen.FirstTimeAppearance = DateTime.UtcNow;
+                    break;
+                case 2:
+                    citizen.SecondTimeAppearance = DateTime.UtcNow;
+                    break;
+                case 3:
+                    citizen.ThirdTimeAppearance = DateTime.UtcNow;
+                    break;
+            }
+
             citizen.StatusInCallCenter = CitizenStatus.InProgress;
             citizen.LockedByUserId = userId;
             citizen.LockedUntil = DateTime.UtcNow.AddMinutes(30);
@@ -173,6 +191,50 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         return Ok();
     }
 
+    /// <summary>
+    /// Create a callcenter case for a citizen
+    /// </summary>
+    /// <response code="201">Created</response>
+    /// <response code="401">Unauthorized</response>
+    /// <response code="404">Citizen not found</response>
+    /// <response code="409">Case already exists for this citizen</response>
+    [ProducesResponseType(201)]
+    [ProducesResponseType(401)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(409)]
+    [HttpPost("106-case")]
+    public async Task<IActionResult> CreateCallcenterCase([FromBody] CreateCallcenterCaseRequest request)
+    {
+        // Find the citizen
+        var citizen = await dbContext.Citizens.FindAsync(request.Id);
+        if (citizen is null)
+        {
+            return NotFound("Citizen not found.");
+        }
+
+        // Check if a case already exists for this citizen
+        var existingCase = await dbContext.CallcenterCases
+            .FirstOrDefaultAsync(c => c.CitizenRecordId == request.Id);
+        
+        if (existingCase is not null)
+        {
+            return Conflict("A case already exists for this citizen.");
+        }
+
+        // Create the new case
+        var callcenterCase = new CallcenterCase
+        {
+            CallcenterCaseNumber = request.CaseNumber,
+            CitizenRecordId = request.Id,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        dbContext.CallcenterCases.Add(callcenterCase);
+        await dbContext.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(CreateCallcenterCase), new { id = callcenterCase.Id }, callcenterCase);
+    }
+
     private static CitizenResponse MapToResponse(CitizenRecord citizenRecord) => new(
         citizenRecord.Id,
         citizenRecord.StreetName,
@@ -200,5 +262,10 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
         citizenRecord.IsTemporaryAbroad,
         citizenRecord.TemporaryStreetName,
         citizenRecord.TemporaryBuildingNumber,
-        citizenRecord.TemporaryFlat);
+        citizenRecord.TemporaryFlat,
+        citizenRecord.AppearanceCount,
+        citizenRecord.FirstTimeAppearance,
+        citizenRecord.SecondTimeAppearance,
+        citizenRecord.ThirdTimeAppearance
+        );
 }
