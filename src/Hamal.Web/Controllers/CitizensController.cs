@@ -39,7 +39,7 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
             var pendingStatus = nameof(CitizenStatus.Pending);
             var citizen = await dbContext.Citizens
                 .FromSqlRaw("""
-                                SELECT c.* FROM "Citizens" c
+                                SELECT *
                                 FROM "Citizens" c
                                 WHERE 
                                     c."StatusInCallCenter" = {0} 
