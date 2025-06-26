@@ -43,7 +43,7 @@ public class CitizensController(AppDbContext dbContext, IValidator<UpdateCitizen
                                 FROM "Citizens" c
                                 WHERE 
                                     c."StatusInCallCenter" = {0} 
-                                    AND c."AppearanceCount" <= 4
+                                    AND c."AppearanceCount" <= 1
                                     AND c."IsAnsweredTheCall" = FALSE
                                     AND c."IsLeftTheCity" = FALSE
                                     AND c."IsDead" = FALSE
