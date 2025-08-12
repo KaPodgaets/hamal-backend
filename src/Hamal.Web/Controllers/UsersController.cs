@@ -49,7 +49,7 @@ public class UsersController(AppDbContext dbContext, IPasswordHasher passwordHas
     }
     
     /// <summary>
-    /// Create new user
+    /// Create a new user
     /// </summary>
     /// <response code="200">Returns a CreatedAtActionResult</response>
     /// <response code="401">Unauthorized</response>
@@ -68,7 +68,8 @@ public class UsersController(AppDbContext dbContext, IPasswordHasher passwordHas
             Id = Guid.NewGuid(),
             Username = request.Username,
             PasswordHash = passwordHasher.HashPassword(request.Password),
-            Role = request.Role
+            Role = request.Role,
+            IsDisabled = false
         };
 
         dbContext.Users.Add(user);

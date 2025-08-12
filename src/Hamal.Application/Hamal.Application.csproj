@@ -11,4 +11,8 @@
       <ProjectReference Include="..\Hamal.Domain\Hamal.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Users\" />
+    </ItemGroup>
+
 </Project>
