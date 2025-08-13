@@ -20,6 +20,7 @@ public static class DependencyInjection
 
         // Background Services
         services.AddHostedService<AbandonedCitizenCleanupJob>();
+        services.AddHostedService<DisableOperatorsBackgroundService>();
         
         return services;
     }

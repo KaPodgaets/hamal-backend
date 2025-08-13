@@ -42,11 +42,9 @@ public static class WebApplicationExtensions
         
         if (!dbContext.Users.Any(u => u.Username == userName))
         {
-            dbContext.Users.Add(new User
-            {
-                Id = Guid.NewGuid(), Username = userName, PasswordHash = passwordHasher.HashPassword(password),
-                Role = Role.Admin
-            });
+            // Create an admin user if it does not exist
+            var user = User.Create(userName, passwordHasher.HashPassword(password), Role.Admin);
+            dbContext.Users.Add(user);
             await dbContext.SaveChangesAsync();
         }
     }

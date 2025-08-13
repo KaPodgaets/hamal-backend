@@ -19,7 +19,7 @@ public class AuthController(
     IJwtTokenGenerator jwtTokenGenerator) : ControllerBase
 {
     /// <summary>
-    /// Returns a JWT token with encrypted user's role
+    /// Returns a JWT token with an encrypted user's role
     /// </summary>
     /// <param name="request"></param>
     /// <response code="200">Returns the user list</response>
@@ -30,11 +30,14 @@ public class AuthController(
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
-
+                
         if (user is null || !passwordHasher.VerifyPassword(request.Password, user.PasswordHash))
         {
             return Unauthorized("Invalid credentials.");
         }
+        
+        if(user.IsDisabled)
+            return Unauthorized("User is disabled.");
 
         return Ok(new LoginResponse(jwtTokenGenerator.GenerateToken(user), (int)user.Role));
     }

@@ -39,7 +39,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 .HasForeignKey<CallcenterCase>(c => c.CitizenRecordId)
                 .OnDelete(DeleteBehavior.Cascade);
             
-            // Create unique index on CitizenRecordId to enforce one-to-one relationship
+            // Create a unique index on CitizenRecordId to enforce one-to-one relationship
             b.HasIndex(c => c.CitizenRecordId)
                 .IsUnique();
         });

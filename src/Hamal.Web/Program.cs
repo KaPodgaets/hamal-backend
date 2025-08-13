@@ -29,11 +29,10 @@ public class Program
             Console.WriteLine("env path not found");
             throw new NullReferenceException("<UNK>  .env file not found in dev or publish paths.");
         }
-            
-
+        // Load environment variables from .env file    
         DotNetEnv.Env.Load(File.Exists(devEnvPath) ? devEnvPath : prodEnvPath);
 
-
+        // set the correct URL base
         builder.WebHost.UseUrls("http://localhost:5051");
         
         var configuration = builder.Configuration;
@@ -41,6 +40,7 @@ public class Program
 
         // --- Services Configuration ---
         services.AddProgramDependencies(configuration);
+        
 
         // --- Application Build ---
         var app = builder.Build();
