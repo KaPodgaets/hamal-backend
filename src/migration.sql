@@ -53,6 +53,7 @@ CREATE TABLE "Users" (
     "Username" text NOT NULL,
     "PasswordHash" text NOT NULL,
     "Role" text NOT NULL,
+    "IsDisabled" boolean NOT NULL,
     CONSTRAINT "PK_Users" PRIMARY KEY ("Id")
 );
 
@@ -69,7 +70,7 @@ CREATE TABLE "CallcenterCases" (
 CREATE UNIQUE INDEX "IX_CallcenterCases_CitizenRecordId" ON "CallcenterCases" ("CitizenRecordId");
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20250624054149_Initial', '8.0.17');
+VALUES ('20250813072816_Initial', '8.0.17');
 
 COMMIT;
 
